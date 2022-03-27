@@ -1,0 +1,102 @@
+.header{
+    background-color: black;
+    color: white;
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+}
+
+.nav {
+    background-color: #f0e68c;
+    width: 100%;
+    height: fit-content;
+}
+.nav ul
+{
+    list-style-type: none;/*specifies the list style type marker, in this case its none*/
+    display: table;
+}
+.nav li{
+    float: left;
+    text-align: center;
+   
+}
+
+.nav li a
+{
+    display: table-cell;/*property specifies the display behavior (the type of rendering box) of an element*/
+    width: 200px;
+    height: 50px;
+    text-decoration: none;
+    color: black;
+    vertical-align: middle;
+    background-color: #f0e68c;
+}
+
+.nav li a:hover{
+    color: #f0e68c;
+    background-color: black;
+}
+.article
+{
+    width: 80%;
+    float: left;
+    height: fit-content;
+}
+
+.aside {
+    width: 20%;
+    float: left;
+    color: black;
+    height: 100%;
+    background-color: #f0e68c;
+}
+.aside ul
+{
+    list-style-type: none;/*specifies the list style type marker*/
+    display: table;
+}
+.aside li{
+    float: right;
+     border-radius: 10px;
+    background-color: grey;
+}
+
+.aside li a
+{
+    display: table-cell;
+    width: 200px;
+    height: 30px;
+    text-decoration: none;
+    color: black;
+    vertical-align: middle;
+    background-color: #f0e68c;
+}
+.aside li a:hover{
+    color: #f0e68c;
+    background-color: black;
+}
+
+form{
+    /* background-color: black; */
+    width: 50%;
+    height: fit-content;
+    text-align: center;
+    clear: both;
+    color: #000;
+}
+form label{
+    display: block;
+    text-align: left;
+    margin: 3px;
+    margin-left: 40px;
+}
+
+form .sel{
+    height: 30px;
+    width: 60%;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
