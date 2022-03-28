@@ -13,7 +13,7 @@
   <form method="post" action="register.php">
   	<?php include('includes/errors.php'); ?>
   	<div class="input-group">
-  	  <label>Name</label>
+  	  <label>Full Name</label>
   	  <input type="text" name="name" value="">
   	</div>
 	  <div class="input-group">
@@ -57,7 +57,7 @@
   	  <input type="text" name="companywebsite" value="">
   	</div>
 	  <div class="input-group">
-  	  <label>Starting Datw</label>
+  	  <label>Starting Date</label>
   	  <input type="text" name="startingdate" value="">
   	</div>
   	<div class="input-group">
