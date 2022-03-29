@@ -17,13 +17,32 @@ if (isset($_GET['logout'])) {
 <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="templates/style1.css">
+    <link rel="stylesheet" href="../style.css" />
 </head>
 
 <body>
+    <header>
+        <a href="#" class="logo">CIAMS</a>
+<!-- 
+        <input type="checkbox" id="menu-bar">
+        <label for="menu-bar">Menu</label> -->
 
-    <div class="header">
-        <h2>Home Page</h2>
-    </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#">Logout</a></li>
+                <li><a href="#">Dashboard +</a>
+                    <ul>
+                        <li><a href="#">My Profile</a></li>
+                        <li><a href="#">My Details</a></li>
+                    </ul>
+                </li>
+                <li id="fullname"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
+                        <?php echo $_SESSION['lec_id']; ?></span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="nav">
         <!-- notification message -->
         <?php if (isset($_SESSION['success'])) : ?>
@@ -52,6 +71,7 @@ if (isset($_GET['logout'])) {
         </ul>
     </div>
     <div class="article">
+        <h2>STUDENTS LOGBOOKS</h2>
 
         <table class="table table-striped" width="100%" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
             <tr>
@@ -72,7 +92,7 @@ if (isset($_GET['logout'])) {
                 $conn = mysqli_connect("localhost", "root", "", "supervisedb");
                 // $sql = "SELECT * FROM assigned INNER JOIN students ON assigned.student_id = students.id WHERE assigned.lecturer_id=$lec_id";
                 $lec_id = $_SESSION['lec_id'];
-                
+
                 $sql = "SELECT * FROM assigned, students WHERE assigned.student_id = students.id AND assigned.lecturer_id = $lec_id";
                 // $sql = "SELECT * FROM students JOIN assigned ON assigned.student_id=student.id WHERE assigned.lecturer_id=$lec_id";
                 $res = mysqli_query($conn, $sql);

@@ -24,8 +24,8 @@
         <li><a href="#">Our Portal +</a>
           <ul>
             <li><a href="students/login.php">Student</a></li>
-            <li><a href="supervisor/index.php">Supervisor</a></li>
-            <li><a href="trainer/index.php">Trainer</a></li>
+            <li><a href="supervisor/login.php">Supervisor</a></li>
+            <li><a href="trainer/login.php">Trainer</a></li>
             <li><a href="admin/login.php">Admin</a></li>
           </ul>
         </li>

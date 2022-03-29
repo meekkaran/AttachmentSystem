@@ -53,7 +53,7 @@
                  
 <table class="table table-striped" id="mytable"  border="2" style= "background-color: #84ed86; color: #761a9b; margin: 0 auto;" >
     <tr>
-    <th><b>Name</b></th>
+    <th><b>Full Name</b></th>
     <th><b>Faculty</b></th>
     <th><b>Department</b></th>
     <th><b>Company</b></th>

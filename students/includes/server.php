@@ -9,7 +9,7 @@ $errors = array();
 // connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'supervisedb');
 
-// REGISTER USER
+// REGISTER STUDENT
 if (isset($_POST['reg_user'])) {
   // receive all input values from the form
   $name = mysqli_real_escape_string($db, $_POST['name']);
@@ -75,7 +75,7 @@ if (isset($_POST['reg_user'])) {
   }
 }
 
-// LOGIN USER
+// LOGIN STUDENT
 if (isset($_POST['login_user'])) {
     $admissionnumber = mysqli_real_escape_string($db, $_POST['admissionnumber']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
