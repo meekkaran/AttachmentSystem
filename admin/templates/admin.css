@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+#top-navigation {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background-color: #800000;
+  box-shadow: 0 2px 10px;
+  z-index: 4;
+}
+#top-navigation #student_name {
+  color: whitesmoke;
+  float: right;
+  margin-right: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 10px;
+  font-family: serif;
+}
+#top-navigation #student_name_adjusted {
+  margin-top: -20px;
+  color: whitesmoke;
+  float: right;
+  margin-right: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: serif;
+}
+
+#left_side_bar {
+  height: 92vh;
+  float: left;
+  margin-top: 50px;
+  overflow: auto;
+  background-color: #800000;
+  position: fixed;
+  box-shadow: 3px 2px 4px;
+  width: 200px;
+  z-index: 2;
+}
+#left_side_bar #menu_list a {
+  text-decoration: none;
+  color: white;
+  font-size: 1em;
+}
+#left_side_bar #menu_list li {
+  text-decoration-style: none;
+  padding: 14px 10px 14px 12px;
+  border-bottom: 1px solid white;
+  font-weight: lighter;
+}
+#left_side_bar #menu_list li:hover {
+  background-color: orange;
+  transition: 0.3s;
+  padding-left: 16px;
+}
+
+#main_content {
+  margin-left: 5%;
+  padding: 50px;
+  /*float: right;
+  padding-left: 200px;
+  width: 100%;
+  height: 92vh;
+  overflow-y: auto;
+  overflow-x: auto; */
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+  #left_side_bar {
+    width: 160px;
+  }
+  #left_side_bar #menu_list a {
+    font-size: 0.8em;
+  }
+  #left_side_bar #menu_list li {
+    padding: 14px 10px 14px 8px;
+  }
+
+  #main_content {
+    padding-left: 160px;
+  }
+}
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+  #left_side_bar {
+    width: 160px;
+  }
+  #left_side_bar #menu_list a {
+    font-size: 0.8em;
+  }
+  #left_side_bar #menu_list li {
+    padding: 14px 10px 14px 8px;
+  }
+
+  #main_content {
+    padding-left: 160px;
+  }
+}
+/* Small Devices, Tablets */
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  #left_side_bar {
+    width: 200px;
+  }
+  #left_side_bar #menu_list a {
+    font-size: 1em;
+  }
+  #left_side_bar #menu_list li {
+    padding: 14px 10px 14px 12px;
+  }
+
+  #main_content {
+    padding-left: 200px;
+  }
+}
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  #left_side_bar {
+    width: 200px;
+  }
+  #left_side_bar #menu_list a {
+    font-size: 1em;
+  }
+  #left_side_bar #menu_list li {
+    padding: 14px 10px 14px 12px;
+  }
+
+  #main_content {
+    padding-left: 200px;
+  }
+}
+
+/*# sourceMappingURL=main_page_style.css.map */
+
+.pbody_student_info {
+  background-color: rgba(197, 197, 202, 0.6);
+  border-radius: 5px;
+}
+
+.search_by_side {
+  width: 150px !important;
+  font-weight: bold;
+}
+
+.phead {
+  padding: 20px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  background-color: #800000;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+}
+
+.ptitle {
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+.pbody {
+  background-color: rgba(232, 232, 232, 0.56);
+  border-radius: 5px;
+}
+
+#btn_submit_holder {
+  float: right;
+}
