@@ -25,22 +25,25 @@
     <div class="wrap">
         <div id="left_side_bar">
             <ul id="menu_list">
-                <a class="menu_items_link" href="view_registered_students.php">
+                <a class="menu_items_link" href="registeredstudents.php">
                     <li class="menu_items_list" style="background-color:orange;padding-left:16px">Registered Students</li>
                 </a>
-                <a class="menu_items_link" href="../students_assumptions/students_assumptions.php">
+                <a class="menu_items_link" href="submitreports.php">
                     <li class="menu_items_list">Student Reports</li>
                 </a>
-                <a class="menu_items_link" href="#">
-                    <li class="menu_items_list">Visiting Superviors Score</li>
+                <a class="menu_items_link" href="attachmentlogbooks.php">
+                    <li class="menu_items_list">Attachment Logbooks</li>
                 </a>
-                <a class="menu_items_link" href="../company_score/company_supervisor_score.php">
-                    <li class="menu_items_list">Company Supervisor Score</li>
+                <a class="menu_items_link" href="registeredsupervisors.php">
+                    <li class="menu_items_list">Registered Supervisors</li>
                 </a>
-                <a class="menu_items_link" href="../assign_supervisors/assign_supervisors.php">
+                <a class="menu_items_link" href="assignedlecturers.php">
                     <li class="menu_items_list">Assign Supervisors</li>
                 </a>
-                <a class="menu_items_link" href="../change_password/change_password.php">
+                <a class="menu_items_link" href="remarks.php">
+                    <li class="menu_items_list">Supervisors Remarks</li>
+                </a>
+                <a class="menu_items_link" href="changepassword.php">
                     <li class="menu_items_list">Change Password</li>
                 </a>
                 <a class="menu_items_link" href="../../index.php">
@@ -53,7 +56,7 @@
             <div class="container-fluid">
                 <div class="panel">
                     <div class="panel-heading phead">
-                        <h2 class="panel-title ptitle"> View Registered Students</h2>
+                        <h2 class="panel-title ptitle"> View Registered Lecturers</h2>
                     </div>
                     <div class="panel-body pbody">
 
@@ -95,47 +98,29 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Admission Number</th>
-                <th>Company Name</th>
-                <th>Company Address</th>
-                <th>Company Email</th>
-                <th>Company Contact</th>
-                <th>Company Website</th>
-                <th>Strarting Date</th>
+                <th>Roll ID</th>
                 <th>Date Created</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $query = "SELECT * FROM  students";
+            $query = "SELECT * FROM  lecturers";
             $query_select_all = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($query_select_all)) {
-                $name = $row['name'];
+                $lecname = $row['lecname'];
                 $email = $row['email'];
                 $mobile = $row['mobile'];
-                $admissionnumber = $row['admission_number'];
-                $companyname = $row['companyname'];
-                $companyaddress = $row['companyaddress'];
-                $companyemail = $row['companyemail'];
-                $companycontact = $row['companycontact'];
-                $companywebsite = $row['companywebsite'];
-                $startingdate = $row['startingdate'];
+                $role_id = $row['role_id'];
                 $created_at = $row['created_at'];
 
                 echo "<tr>";
-                echo "<td>{$name}</td>";
+                echo "<td>{$lecname}</td>";
                 echo "<td>{$email}</td>";
                 echo "<td>{$mobile}</td>";
-                echo "<td>{$admissionnumber}</td>";
-                echo "<td>{$companyname}</td>";
-                echo "<td>{$companyaddress}</td>";
-                echo "<td>{$companyemail}</td>";
-                echo "<td>{$companycontact}</td>";
-                echo "<td>{$companywebsite}</td>";
-                echo "<td>{$startingdate}</td>";
+                echo "<td>{$role_id}</td>";
                 echo "<td>{$created_at}</td>";
-                echo "<td><a href='registeredstudents.php?delete={$admissionnumber}'>Delete</a></td>";
+                echo "<td><a href='registeredssupervisors.php?delete={$role_id}'>Delete</a></td>";
                 echo "</tr>";
             }
             ?>
@@ -143,9 +128,9 @@
             <?php
             if (isset($_GET['delete'])) {
                 $delete_id = $_GET['delete'];
-                $query = "DELETE FROM students WHERE student_id={$delete_id} ";
+                $query = "DELETE FROM lecturers WHERE lec_id={$delete_id} ";
                 $delete_query = mysqli_query($conn, $query);
-                header("location: registeredstudents.php");
+                header("location: registeredsupervisors.php");
             }
             ?>
 

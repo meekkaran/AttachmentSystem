@@ -51,9 +51,9 @@ $select_all_weeks = mysqli_query($conn, $query);
 
     <div class="navbar">
       <ul>
-        <li><a href="#">Logbook</a></li>
-        <li><a href="#">Submit Report</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="logbook.php">Logbook</a></li>
+        <li><a href="submitreports.php">Submit Report</a></li>
+        <li><a href="index.php">Logout</a></li>
         <li><a href="#">Dashboard +</a>
           <ul>
             <li><a href="#">My Profile</a></li>

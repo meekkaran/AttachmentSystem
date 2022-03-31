@@ -1,0 +1,38 @@
+/* CSS Document */
+form {
+  width: 40%;
+  padding: 20px;
+  background: white;
+  margin: 100px auto;
+  border-radius: 10px;
+  color: #727272;
+  height: 300px;
+}
+
+form input {
+  width: 100%;
+  padding: 5px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+form input[type="submit"] {
+  color: white;
+  background: #ff4081;
+  border: 0;
+  border-radius: 10px;
+}
+
+#prog {
+  width: 100%;
+  height: 30px;
+}
+
+#btn_submit_holder {
+  float: right;
+}
+
+.form-control-adjusted {
+  padding: 8px 12px;
+  height: 36px;
+}
