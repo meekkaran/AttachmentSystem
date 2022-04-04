@@ -177,3 +177,13 @@ footer {
 .box .content {
   margin: 20px 0 0 0;
 }
+
+/* styling the name of a user on a dashboard */
+/* .username{
+  margin-top: -20px;
+  color: whitesmoke;
+  float: right;
+  margin-right: 20px;
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: serif; } */

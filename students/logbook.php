@@ -6,11 +6,11 @@ if (!isset($_SESSION['student_id'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: login.php');
 }
-if (isset($_GET['logout'])) {
-  session_destroy();
-  unset($_SESSION['student_id']);
-  header("location: login.php");
-}
+// if (isset($_GET['logout'])) {
+//   session_destroy();
+//   unset($_SESSION['student_id']);
+//   header("location: login.php");
+// }
 
 // variable array $db that hold each parameters necessary to connect to the database
 $db['db_host'] = "localhost";
@@ -60,7 +60,7 @@ $select_all_weeks = mysqli_query($conn, $query);
             <li><a href="#">My Details</a></li>
           </ul>
         </li>
-        <li id="firstname"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
+        <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
             <?php echo $_SESSION['name']; ?></span>
         </li>
       </ul>
@@ -137,9 +137,10 @@ $select_all_weeks = mysqli_query($conn, $query);
           <th><b>FRIDAY</b></th>
           <th><b>SATURDAY</b></th>
           <th><b>Student Comments</b></th>
-          <th><b>Supervisor Comments</b></th>
-          <th><b>Trainer Comments</b></th>
-          <th><b>ACTIONS</b></th>
+          <!-- <th><b>Supervisor Comments</b></th>
+          <th><b>Trainer Comments</b></th> -->
+          <th><b>LECTURER REMARKS</b></th>
+          <th><b>TRAINER REMARKS</b></th>
         </tr>
         <tbody id="show_data">
 
@@ -152,7 +153,7 @@ $select_all_weeks = mysqli_query($conn, $query);
               $conn = mysqli_connect("localhost", "root", "", "supervisedb");
               $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "'";
               $res = mysqli_query($conn, $query12);
-              $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK', 'LCOMMENT', 'TCOMMENT');
+              $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK');
               $classes = array();
               while ($row = mysqli_fetch_assoc($res)) {
                 $classes[$row['day_title']] = $row;
@@ -172,7 +173,8 @@ $select_all_weeks = mysqli_query($conn, $query);
                   echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
                 }
               }
-              echo "<td><a href='comments.php?edit={$student_id}'>supervisor comments</a></td>";
+              echo "<td><a href='comments.php?edit={$student_id}'>lecturer comments</a></td>";
+              echo "<td><a href='comments.php?edit={$student_id}'>trainer comments</a></td>";
               echo "</tr>";
             }
           }
