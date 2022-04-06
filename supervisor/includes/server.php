@@ -116,7 +116,7 @@ if (isset($_POST['login_user'])) {
       //  $_SESSION['name'] = $name;
       // $_SESSION['name'] = $results->name;
       $_SESSION['success'] = "You are now logged in";
-      header('location: index.php');
+      header('location: assigned.php');
     } else {
       array_push($errors, "Wrong username/password combination");
     }

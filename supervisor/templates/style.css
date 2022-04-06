@@ -1,23 +1,67 @@
 * {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-transform: capitalize;
 }
 body {
-  font-size: 120%;
-  background: #f8f8ff;
+  /* min-height: 100vh; */
+  background: url(cueabackground.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+header {
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #800000;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 0px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+header .logo {
+  font-weight: bolder;
+  font-size: 25px;
+  color: #fff;
+}
+header .navbar ul {
+  list-style: none;
+}
+header .navbar ul li {
+  position: relative;
+  float: left;
+}
+header .navbar ul li a {
+  font-size: 20px;
+  padding: 20px;
+  color: #fff;
+  display: block;
+}
+header .navbar ul li a:hover {
+  background: orange;
+  color: #fff;
+}
+header .navbar ul li ul {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  background: #800000;
+  display: none;
+}
+header .navbar ul li ul li {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.header {
-  width: 30%;
-  margin: 50px auto 0px;
-  color: white;
-  background: #800000;
-  text-align: center;
-  border: 1px solid #800000;
-  border-bottom: none;
-  border-radius: 10px 10px 0px 0px;
-  padding: 20px;
+header .navbar ul li:focus-within > ul,
+header .navbar ul li:hover > ul {
+  display: initial;
 }
+/* stylign header end>> */
 form,
 .content {
   width: 30%;
