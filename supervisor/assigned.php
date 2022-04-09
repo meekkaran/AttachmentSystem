@@ -92,7 +92,7 @@ if (isset($_GET['logout'])) {
                     echo "<td>{$company}</td>";
                     echo "<td>{$companyaddress}</td>";
                     // echo "<td><a href='categories.php?delete={$id}'>Delete</a></td>";
-                    echo "<td><a href='categories.php?edit={$id}'>Logbook</a></td>";
+                    echo "<td><a href='studentlogbook.php?edit={$id}'>Logbook</a></td>";
                     echo "</tr>";
                 }
                 ?>

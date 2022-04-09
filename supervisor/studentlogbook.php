@@ -2,6 +2,16 @@
 session_start();
 ob_start();
 
+if (!isset($_SESSION['lec_id'])) {
+  $_SESSION['msg'] = "You must log in first";
+  header('location: login.php');
+}
+// if (isset($_GET['logout'])) {
+//   session_destroy();
+//   unset($_SESSION['student_id']);
+//   header("location: login.php");
+// }
+
 // variable array $db that hold each parameters necessary to connect to the database
 $db['db_host'] = "localhost";
 $db['db_user'] = "root";
@@ -29,131 +39,151 @@ $select_all_weeks = mysqli_query($conn, $query);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link href="templates/logbook_style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-  <form method="post" action="logbook.php">
-    <div class="header">
-      <h1>INDUSTRIAL ATTACHMENT MANAGEMENT SYSTEM</h1>
-    </div>
-    <div class="nav">
-    </div>
-    <div class="form-group">
-      <input type="hidden" value="MONDAY" name="mon_days" onclick="myFunction()" class="btn">
-      <input type="hidden" value="TUESDAY" name="tue_days" onclick="myFunction1()" class="btn">
-      <input type="hidden" value="WEDNESDAY" name="wed_days" onclick="myFunction2()" class="btn">
-      <input type="hidden" value="THURSDAY" name="thur_days" onclick="myFunction3()" class="btn">
-      <input type="hidden" value="FRIDAY" name="fri_days" onclick="myFunction4()" class="btn">
-      <input type="hidden" value="SATURDAY" name="sat_days" onclick="myFunction5()" class="btn">
-      <!-- <button  onclick="myFunction6()" type="button" name="get_id" class="btn">WEEK REMARK</button> -->
-    </div>
-    <div class="aside">
-      <hr>
-      <label for="inputEmail4" style="color:black;">TODAY NOTES</label>
-      <input type="text" id="mon" name="mon_day" class="mon" value="MONDAY" placeholder="MONDAY" readonly />
-      <textarea type="text" id="bld" name="mon_notes" class="form-control bld" placeholder="MONDAY NOTES"></textarea>
-      <input type="text" id="tue" name="tue_day" class="tue" value="TUESDAY" placeholder="TUESDAY" readonly />
-      <textarea type="text" id="cole" name="tue_notes" class="form-control cole" placeholder="TUESDAY NOTES"></textarea>
-      <input type="text" id="wed" name="wed_day" class="tue" value="WEDNESDAY" placeholder="WEDNESDAY" readonly />
-      <textarea type="text" id="hrt" name="wed_notes" class="form-control hrt" placeholder="WEDNESDAY NOTES"></textarea>
-      <input type="text" id="thur" name="thur_day" class="thur" value="THURSDAY" placeholder="THURSDAY" readonly />
-      <textarea type="text" id="thal" name="thur_notes" class="form-control thal" placeholder="THURSDAY NOTES"></textarea>
-      <input type="text" id="fri" name="fri_day" class="fri" value="FRIDAY" placeholder="FRIDAY" readonly />
-      <textarea type="text" id="wt" name="fri_notes" class="form-control wt" placeholder="FRIDAY NOTES"></textarea>
-      <input type="text" id="sat" name="sat_day" class="sat" value="SATURDAY" placeholder="SATURDAY" readonly />
-      <textarea type="text" id="ht" name="sat_notes" class="form-control ht" placeholder="SATURDAY NOTES"></textarea>
+  <header>
+    <a href="#" class="logo">CIAMS</a>
 
-      <input type="text" id="remark" name="remark" class="remark" value="LCOMMENT" placeholder="LCOMMENT" readonly />
-      <textarea type="text" id="rmk" name="remarks_notes" class="form-control rmk" placeholder="Comment Work"></textarea>
-      <!-- buttons -->
-      <input type="submit" name="create_post" id="btn_save1" value="MONDAY SUBMIT" class="btn sv2">
-      <input name="create_post1" type="submit" id="btn_save2" value="TUESDAY SUBMIT" class="btn sv3">
-      <input name="create_post2" type="submit" id="btn_save3" value="WEDNESDAY SUBMIT" class="btn sv4">
-      <input name="create_post3" type="submit" id="btn_save4" value="THURSDAY SUBMIT" class="btn sv5">
-      <input name="create_post4" type="submit" id="btn_save5" value="FRIDAY SUBMIT" class="btn sv6">
-      <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7">
-      <input name="create_post6" type="submit" id="btn_save7" value="SUBMIT REMARK" class="btn  sv8">
-      <hr>
-      <?php if (isset($_SESSION['lec_id'])) : ?>
-      <?php endif ?>
+    <!-- <input type="checkbox" id="menu-bar">
+    <label for="menu-bar">Menu</label> -->
+
+    <div class="navbar">
       <ul>
-        <li class="listing"><a href="index.php">Logbook</a></li>
-        <li class="listing"><a href="index.php?logout='1'" style="color: red;">logout</a></li>
-        <!--<li class="listing"><a href="">News</a></li>-->
-        <!--<li class="listing"><a href="">Comments</a></li>-->
-        <!--<li class="listing"><a href="">Users</a></li>-->
+        <li><a href="logbook.php">Logbook</a></li>
+        <li><a href="submitreports.php">Submit Report</a></li>
+        <li><a href="index.php">Logout</a></li>
+        <li><a href="#">Dashboard +</a>
+          <ul>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#">My Details</a></li>
+          </ul>
+        </li>
+        <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
+            <?php echo $_SESSION['lec_id']; ?></span>
+        </li>
       </ul>
     </div>
-    </div>
-    </div>
-  </form>
-  <div class="article">
+  </header>
+  <div class="logbookbody">
+    <form method="post" action="studentlogbook.php">
+      <div class="nav">
+        <div class="form-group">
+          <label for="weeks">WEEKS</label>
+          <select class="form-control" name="week_id" id="weeks">
+            <option value="">--- Choose Week ---</option>
+            <?php foreach ($select_all_weeks as $row) : ?>
+              <option value="<?php echo $row['week_id']; ?>"><?php echo $row['week_title']; ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <!-- <input type="button" value="MONDAY" name="mon_days" onclick="myFunction()" class="btn">
+          <input type="button" value="TUESDAY" name="tue_days" onclick="myFunction1()" class="btn">
+          <input type="button" value="WEDNESDAY" name="wed_days" onclick="myFunction2()" class="btn">
+          <input type="button" value="THURSDAY" name="thur_days" onclick="myFunction3()" class="btn">
+          <input type="button" value="FRIDAY" name="fri_days" onclick="myFunction4()" class="btn">
+          <input type="button" value="SATURDAY" name="sat_days" onclick="myFunction5()" class="btn"> -->
+          <button onclick="myFunction6()" type="button" class="btn">WEEK REMARK</button>
+        </div>
+        <div class="aside">
+          <hr>
+          <label for="inputEmail4" style="color:black;">TODAY NOTES</label>
+          <input type="text" id="mon" name="mon_day" class="mon" value="MONDAY" placeholder="MONDAY" readonly />
+          <textarea type="text" id="bld" name="mon_notes" class="form-control bld" placeholder="MONDAY NOTES"></textarea>
+          <input type="text" id="tue" name="tue_day" class="tue" value="TUESDAY" placeholder="TUESDAY" readonly />
+          <textarea type="text" id="cole" name="tue_notes" class="form-control cole" placeholder="TUESDAY NOTES"></textarea>
+          <input type="text" id="wed" name="wed_day" class="tue" value="WEDNESDAY" placeholder="WEDNESDAY" readonly />
+          <textarea type="text" id="hrt" name="wed_notes" class="form-control hrt" placeholder="WEDNESDAY NOTES"></textarea>
+          <input type="text" id="thur" name="thur_day" class="thur" value="THURSDAY" placeholder="THURSDAY" readonly />
+          <textarea type="text" id="thal" name="thur_notes" class="form-control thal" placeholder="THURSDAY NOTES"></textarea>
+          <input type="text" id="fri" name="fri_day" class="fri" value="FRIDAY" placeholder="FRIDAY" readonly />
+          <textarea type="text" id="wt" name="fri_notes" class="form-control wt" placeholder="FRIDAY NOTES"></textarea>
+          <input type="text" id="sat" name="sat_day" class="sat" value="SATURDAY" placeholder="SATURDAY" readonly />
+          <textarea type="text" id="ht" name="sat_notes" class="form-control ht" placeholder="SATURDAY NOTES"></textarea>
+          <input type="text" id="remark" name="remark" class="remark" value="REMARK" placeholder="REMARK" readonly />
+          <textarea type="text" id="rmk" name="remarks_notes" class="form-control rmk" placeholder="WEEKLY REMARK"></textarea>
+          <!-- buttons -->
+          <!-- <input type="submit" name="create_post" id="btn_save1" value="MONDAY SUBMIT" class="btn sv2">
+          <input name="create_post1" type="submit" id="btn_save2" value="TUESDAY SUBMIT" class="btn sv3">
+          <input name="create_post2" type="submit" id="btn_save3" value="WEDNESDAY SUBMIT" class="btn sv4">
+          <input name="create_post3" type="submit" id="btn_save4" value="THURSDAY SUBMIT" class="btn sv5">
+          <input name="create_post4" type="submit" id="btn_save5" value="FRIDAY SUBMIT" class="btn sv6">
+          <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7"> -->
+          <input name="create_post6" type="submit" id="btn_save7" value="SUBMIT REMARK" class="btn  sv8">
+          <hr>
+          <?php if (isset($_SESSION['lec_id'])) : ?>
+          <?php endif ?>
+          <ul>
+            <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
+            <li class="listing"><a href="index.php">Logbook</a></li>
+            <li class="listing"><a href="lec.php">Your Supervisor</a></li>
+            <!-- <li class="listing"><a href="">Profile</a></li> -->
+            <li class="listing"><a href="index.php?logout='1'" style="color: red;">logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+    <div class="article">
 
-    <table class="table table-striped" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
-      <tr>
-        <th><b>week/7</b></th>
-        <th><b>MONDAY</b></th>
-        <th><b>TUESDAY</b></th>
-        <th><b>WEDNESDAY</b></th>
-        <th><b>THURSDAY</b></th>
-        <th><b>FRIDAY</b></th>
-        <th><b>SATURDAY</b></th>
-        <th><b>Student Comments</b></th>
-        <th><b>ACTION</b></th>
-        <!-- <th><b>Trainer Comments</b></th> -->
-      </tr>
-      <tbody id="show_data">
+      <table class="table table-striped" width="100%" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
+        <tr>
+          <th><b>week/12</b></th>
+          <th><b>MONDAY</b></th>
+          <th><b>TUESDAY</b></th>
+          <th><b>WEDNESDAY</b></th>
+          <th><b>THURSDAY</b></th>
+          <th><b>FRIDAY</b></th>
+          <th><b>SATURDAY</b></th>
+          <th><b>Student Comments</b></th>
+          <!-- <th><b>Supervisor Comments</b></th>
+          <th><b>Trainer Comments</b></th> -->
+          <th><b>LECTURER REMARKS</b></th>
+          <th><b>TRAINER REMARKS</b></th>
+        </tr>
+        <tbody id="show_data">
 
-        <?php
-        if (isset($_GET['edit'])) {
-          $student_id = $_GET['edit'];
-          foreach ($select_all_weeks as $key => $t) {
-            $_SESSION['week_id'] = $t['week_id'];
-            echo "<tr>";
-            echo "<td>" . $t['week_title'] . "</td>";
-            $conn = mysqli_connect("localhost", "root", "", "supervisedb");
-            $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "'";
-            $res = mysqli_query($conn, $query12);
-            // $week_days = array('MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY',');
-            $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK');
-            $classes = array();
-            while ($row = mysqli_fetch_assoc($res)) {
-              $classes[$row['day_title']] = $row;
-              $_SESSION['student_id'] = $row['student_id'];
-
-              // $id = $_SESSION['week_id'];
-
-            }
-            foreach ($week_days as $day) {
-
-              if (array_key_exists($day, $classes)) {
-                $row = $classes[$day];
-                // $_SESSION['student_id'] = $row['student_id'];
-
-                // $id = $_SESSION['logbook_id'];
-                // $_SESSION['week_id'] = $row['week_id'];
-
-                // $week_id = $_SESSION['week_id'];
-                // $_SESSION['week_id'] = $row['week_id'];
-                // echo "<td style='background-color:green;color:white;'>"."Match"."</td>";
-
-                echo  "<td onclick='myFunction6()' type='button' style='background-color:green;color:white;'>" . $row['day_notes'] . "<br>" . $row['created_at'] . "</td>";
-              } else {
-
-                echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+          <?php
+          if (isset($_SESSION['lec_id'])) {
+            $lec_id = $_SESSION['lec_id'];
+            foreach ($select_all_weeks as $key => $t) {
+              echo "<tr>";
+              echo "<td>" . $t['week_title'] . "</td>";
+              $conn = mysqli_connect("localhost", "root", "", "supervisedb");
+              $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND lec_id='" . $lec_id . "'";
+              $res = mysqli_query($conn, $query12);
+              $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK');
+              $classes = array();
+              while ($row = mysqli_fetch_assoc($res)) {
+                $classes[$row['day_title']] = $row;
               }
+              foreach ($week_days as $day) {
+
+                if (array_key_exists($day, $classes)) {
+                  $row = $classes[$day];
+                  $_SESSION['lec_id'] = $row['lec_id'];
+                  $_SESSION['week_id'] = $row['week_id'];
+                  $id = $_SESSION['student_id'];
+                  $id1 = $_SESSION['week_id'];
+                  // echo "<td style='background-color:green;color:white;'>"."Match"."</td>";
+                  echo  "<td  style='background-color:green;color:white;'>" . $row['day_notes'] . "<br>" . $row['created_at'] . "</td>";
+                } else {
+
+                  echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+                }
+              }
+              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+              echo "</tr>";
             }
-            echo "<td><a href='comments.php?edit={$student_id}'>supervisor comments</a></td>";
-            echo "</tr>";
           }
-        }
+          ?>
 
-        ?>
-
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
-
 
 
   <?php
@@ -166,9 +196,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['mon_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -183,9 +213,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['tue_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -200,9 +230,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['wed_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -217,9 +247,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['thur_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -234,9 +264,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['fri_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -251,7 +281,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['sat_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
       "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
@@ -259,42 +289,62 @@ $select_all_weeks = mysqli_query($conn, $query);
     exit(0);
     // confirmQuery($create_post_query);
   }
-
-  // get logbook id
-  // remarks input
   // remarks input
   if (isset($_POST['create_post6'])) {
     global $conn;
-    global $student_id;
     // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
     // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    // $day_title = $_POST['remark'];
-    // $student = global $student_id;
+    $day_title = $_POST['remark'];
+    $week_title = $_POST['week_id'];
     $day_notes  = $_POST['remarks_notes'];
-    if (isset($_SESSION['week_id'])) {
-      # code...
-    }
-    if (isset($_SESSION['student_id'])) {
-      # code...
-    }
-    $week_id = $_SESSION['week_id'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO lec_comments(student_id,lecomment,week_id) ";
+    $lec_id = $_SESSION['lec_id'];
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$student_id},'{$day_notes}','{$week_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', '{$leccomment}', NULL) ";
     $create_post_query = mysqli_query($conn, $query);
-    // if (isset($_GET['edit'])) {
-    // }
-    //   $student_id = $_GET['edit'];
-    header("location: logbook.php?edit=" . $student_id . "");
-
+    header('location: studentlogbook.php');
     exit(0);
     // confirmQuery($create_post_query);
   }
-
-
   ?>
-  <div class="footer">Footer</div>
+
+  <!-- footer section -->
+
+  <!-- <footer>
+    <div class="main-content">
+      <div class="left box">
+        <h2>Lang'ata Campus</h2>
+        <div class="content">
+          <p>P.O BOX 62157-00200 <br />Nairobi, Kenya</p>
+          <p>Email: admissions@cuea.edu</p>
+          <p>Mobile: (+254) (0) 709-691000</p> <br />
+          <p>Bogani East Road, off Magadi Road, Next to Galleria Mall, 23km from the Jomo Kenyatta International Airport in Nairobi, Kenya.</p>
+        </div>
+      </div>
+
+      <div class="center box">
+        <h2>Gaba Campus</h2>
+        <div class="content">
+          <p>P.O BOX 908-30100<br />Eldoret, Kenya</p>
+          <p>SMS: +(254) (0) 729 742-791</p>
+          <p>Email: registrygaba@cuea.edu</p>
+          <p>Mobile: +(254) (0) 728 458-276</p> <br />
+          <p>Kisumu Road, next to Eldoret Polytechnic, 12km fromm the Eldoret Interntional Airport in Eldoret, Kenya.</p>
+        </div>
+      </div>
+
+      <div class="right box">
+        <h2>Contact us</h2>
+        <div class="content">
+          <a href="#">LinkedIn</a><br />
+          <a href="#">Twitter</a><br />
+          <a href="#">Facebook</a><br />
+          <a href="#">YouTube</a><br />
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer> -->
 
 </body>
 

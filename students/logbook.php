@@ -113,8 +113,6 @@ $select_all_weeks = mysqli_query($conn, $query);
           <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7">
           <input name="create_post6" type="submit" id="btn_save7" value="SUBMIT REMARK" class="btn  sv8">
           <hr>
-          <?php if (isset($_SESSION['lec_id'])) : ?>
-          <?php endif ?>
           <ul>
             <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
             <li class="listing"><a href="index.php">Logbook</a></li>
@@ -151,7 +149,7 @@ $select_all_weeks = mysqli_query($conn, $query);
               echo "<tr>";
               echo "<td>" . $t['week_title'] . "</td>";
               $conn = mysqli_connect("localhost", "root", "", "supervisedb");
-              $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "'";
+              $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "' ";
               $res = mysqli_query($conn, $query12);
               $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK');
               $classes = array();
@@ -173,8 +171,8 @@ $select_all_weeks = mysqli_query($conn, $query);
                   echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
                 }
               }
-              echo "<td><a href='comments.php?edit={$student_id}'>lecturer comments</a></td>";
-              echo "<td><a href='comments.php?edit={$student_id}'>trainer comments</a></td>";
+              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
               echo "</tr>";
             }
           }
@@ -196,9 +194,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['mon_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -213,9 +211,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['tue_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -230,9 +228,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['wed_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, lec_id, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -247,9 +245,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['thur_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -264,9 +262,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['fri_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -281,9 +279,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['sat_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -298,9 +296,9 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['remarks_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -310,41 +308,6 @@ $select_all_weeks = mysqli_query($conn, $query);
 
   <!-- footer section -->
 
-  <!-- <footer>
-    <div class="main-content">
-      <div class="left box">
-        <h2>Lang'ata Campus</h2>
-        <div class="content">
-          <p>P.O BOX 62157-00200 <br />Nairobi, Kenya</p>
-          <p>Email: admissions@cuea.edu</p>
-          <p>Mobile: (+254) (0) 709-691000</p> <br />
-          <p>Bogani East Road, off Magadi Road, Next to Galleria Mall, 23km from the Jomo Kenyatta International Airport in Nairobi, Kenya.</p>
-        </div>
-      </div>
-
-      <div class="center box">
-        <h2>Gaba Campus</h2>
-        <div class="content">
-          <p>P.O BOX 908-30100<br />Eldoret, Kenya</p>
-          <p>SMS: +(254) (0) 729 742-791</p>
-          <p>Email: registrygaba@cuea.edu</p>
-          <p>Mobile: +(254) (0) 728 458-276</p> <br />
-          <p>Kisumu Road, next to Eldoret Polytechnic, 12km fromm the Eldoret Interntional Airport in Eldoret, Kenya.</p>
-        </div>
-      </div>
-
-      <div class="right box">
-        <h2>Contact us</h2>
-        <div class="content">
-          <a href="#">LinkedIn</a><br />
-          <a href="#">Twitter</a><br />
-          <a href="#">Facebook</a><br />
-          <a href="#">YouTube</a><br />
-          <a href="#">Instagram</a>
-        </div>
-      </div>
-    </div>
-  </footer> -->
 
 </body>
 
