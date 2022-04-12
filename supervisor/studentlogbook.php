@@ -79,13 +79,14 @@ $select_all_weeks = mysqli_query($conn, $query);
           </select>
         </div>
         <div class="form-group">
-          <!-- <input type="button" value="MONDAY" name="mon_days" onclick="myFunction()" class="btn">
+          <input type="button" value="MONDAY" name="mon_days" onclick="myFunction()" class="btn">
           <input type="button" value="TUESDAY" name="tue_days" onclick="myFunction1()" class="btn">
           <input type="button" value="WEDNESDAY" name="wed_days" onclick="myFunction2()" class="btn">
           <input type="button" value="THURSDAY" name="thur_days" onclick="myFunction3()" class="btn">
           <input type="button" value="FRIDAY" name="fri_days" onclick="myFunction4()" class="btn">
-          <input type="button" value="SATURDAY" name="sat_days" onclick="myFunction5()" class="btn"> -->
+          <input type="button" value="SATURDAY" name="sat_days" onclick="myFunction5()" class="btn">
           <button onclick="myFunction6()" type="button" class="btn">WEEK REMARK</button>
+          <button onclick="myFunction7()" type="button" class="btn">LECTURER REMARK</button>
         </div>
         <div class="aside">
           <hr>
@@ -104,19 +105,20 @@ $select_all_weeks = mysqli_query($conn, $query);
           <textarea type="text" id="ht" name="sat_notes" class="form-control ht" placeholder="SATURDAY NOTES"></textarea>
           <input type="text" id="remark" name="remark" class="remark" value="REMARK" placeholder="REMARK" readonly />
           <textarea type="text" id="rmk" name="remarks_notes" class="form-control rmk" placeholder="WEEKLY REMARK"></textarea>
+          <input type="text" id="lecremark" name="lecremark" class="lecremark" value="LECREMARK" placeholder="LECREMARK" readonly />
+          <textarea type="text" id="lrmk" name="lec_remarks_notes" class="form-control lrmk" placeholder="LECTURER WEEKLY REMARK"></textarea>
           <!-- buttons -->
-          <!-- <input type="submit" name="create_post" id="btn_save1" value="MONDAY SUBMIT" class="btn sv2">
+          <input type="submit" name="create_post" id="btn_save1" value="MONDAY SUBMIT" class="btn sv2">
           <input name="create_post1" type="submit" id="btn_save2" value="TUESDAY SUBMIT" class="btn sv3">
           <input name="create_post2" type="submit" id="btn_save3" value="WEDNESDAY SUBMIT" class="btn sv4">
           <input name="create_post3" type="submit" id="btn_save4" value="THURSDAY SUBMIT" class="btn sv5">
           <input name="create_post4" type="submit" id="btn_save5" value="FRIDAY SUBMIT" class="btn sv6">
-          <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7"> -->
+          <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7">
           <input name="create_post6" type="submit" id="btn_save7" value="SUBMIT REMARK" class="btn  sv8">
+          <input name="create_post7" type="submit" id="btn_save8" value="SUBMIT LECTURER REMARK" class="btn  sv9">
           <hr>
-          <?php if (isset($_SESSION['lec_id'])) : ?>
-          <?php endif ?>
           <ul>
-            <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
+            <li class="listing"><a href="profile.php"><?php echo $_SESSION['lec_id']; ?></a></li>
             <li class="listing"><a href="index.php">Logbook</a></li>
             <li class="listing"><a href="lec.php">Your Supervisor</a></li>
             <!-- <li class="listing"><a href="">Profile</a></li> -->
@@ -145,15 +147,15 @@ $select_all_weeks = mysqli_query($conn, $query);
         <tbody id="show_data">
 
           <?php
-          if (isset($_SESSION['lec_id'])) {
-            $lec_id = $_SESSION['lec_id'];
+          if (isset($_SESSION['student_id'])) {
+            $student_id = $_SESSION['student_id'];
             foreach ($select_all_weeks as $key => $t) {
               echo "<tr>";
               echo "<td>" . $t['week_title'] . "</td>";
               $conn = mysqli_connect("localhost", "root", "", "supervisedb");
-              $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND lec_id='" . $lec_id . "'";
+              $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "' ";
               $res = mysqli_query($conn, $query12);
-              $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK');
+              $week_days = array('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'REMARK', 'LECREMARK');
               $classes = array();
               while ($row = mysqli_fetch_assoc($res)) {
                 $classes[$row['day_title']] = $row;
@@ -162,7 +164,7 @@ $select_all_weeks = mysqli_query($conn, $query);
 
                 if (array_key_exists($day, $classes)) {
                   $row = $classes[$day];
-                  $_SESSION['lec_id'] = $row['lec_id'];
+                  $_SESSION['student_id'] = $row['student_id'];
                   $_SESSION['week_id'] = $row['week_id'];
                   $id = $_SESSION['student_id'];
                   $id1 = $_SESSION['week_id'];
@@ -230,7 +232,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['wed_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, lec_id, trainercomment) ";
     $query .=
       "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
@@ -283,7 +285,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     $student_id = $_SESSION['student_id'];
     $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -297,12 +299,29 @@ $select_all_weeks = mysqli_query($conn, $query);
     $day_title = $_POST['remark'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['remarks_notes'];
-    $lec_id = $_SESSION['lec_id'];
+    $student_id = $_SESSION['student_id'];
     $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', '{$leccomment}', NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
     $create_post_query = mysqli_query($conn, $query);
-    header('location: studentlogbook.php');
+    header('location: logbook.php');
+    exit(0);
+    // confirmQuery($create_post_query);
+  }
+  //lecturer remarks input
+  if (isset($_POST['create_post7'])) {
+    global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
+    $day_title = $_POST['lecremark'];
+    $week_title = $_POST['week_id'];
+    $day_notes  = $_POST['lec_remarks_notes'];
+    $student_id = $_SESSION['student_id'];
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query .=
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+    $create_post_query = mysqli_query($conn, $query);
+    header('location: logbook.php');
     exit(0);
     // confirmQuery($create_post_query);
   }
@@ -310,41 +329,6 @@ $select_all_weeks = mysqli_query($conn, $query);
 
   <!-- footer section -->
 
-  <!-- <footer>
-    <div class="main-content">
-      <div class="left box">
-        <h2>Lang'ata Campus</h2>
-        <div class="content">
-          <p>P.O BOX 62157-00200 <br />Nairobi, Kenya</p>
-          <p>Email: admissions@cuea.edu</p>
-          <p>Mobile: (+254) (0) 709-691000</p> <br />
-          <p>Bogani East Road, off Magadi Road, Next to Galleria Mall, 23km from the Jomo Kenyatta International Airport in Nairobi, Kenya.</p>
-        </div>
-      </div>
-
-      <div class="center box">
-        <h2>Gaba Campus</h2>
-        <div class="content">
-          <p>P.O BOX 908-30100<br />Eldoret, Kenya</p>
-          <p>SMS: +(254) (0) 729 742-791</p>
-          <p>Email: registrygaba@cuea.edu</p>
-          <p>Mobile: +(254) (0) 728 458-276</p> <br />
-          <p>Kisumu Road, next to Eldoret Polytechnic, 12km fromm the Eldoret Interntional Airport in Eldoret, Kenya.</p>
-        </div>
-      </div>
-
-      <div class="right box">
-        <h2>Contact us</h2>
-        <div class="content">
-          <a href="#">LinkedIn</a><br />
-          <a href="#">Twitter</a><br />
-          <a href="#">Facebook</a><br />
-          <a href="#">YouTube</a><br />
-          <a href="#">Instagram</a>
-        </div>
-      </div>
-    </div>
-  </footer> -->
 
 </body>
 
@@ -358,6 +342,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     var b = document.getElementById("wt");
     var c = document.getElementById("ht");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var e = document.getElementById("mon");
     var f = document.getElementById("tue");
     var g = document.getElementById("wed");
@@ -365,6 +350,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var sv2 = document.getElementById("btn_save1");
     var sv3 = document.getElementById("btn_save2");
     var sv4 = document.getElementById("btn_save3");
@@ -372,14 +358,17 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "none";
       k.style.display = "none";
+      l.style.display = "none";
       f.style.display = "none";
       g.style.display = "none";
       x.style.display = "block";
+      s.style.display = "none";
       y.style.display = "none";
       e.style.display = "block";
       z.style.display = "none";
@@ -394,6 +383,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv4.style.display = "none";
       sv5.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -416,6 +406,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv3.style.display = "none";
       sv4.style.display = "none";
       sv5.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 
@@ -424,9 +415,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var a = document.getElementById("thal");
     var x = document.getElementById("cole");
     var y = document.getElementById("bld");
@@ -441,12 +434,15 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "none";
       k.style.display = "none";
+      l.style.display = "none";
       g.style.display = "none";
+      s.style.display = "none";
       f.style.display = "block";
       x.style.display = "block";
       y.style.display = "none";
@@ -463,6 +459,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv6.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -485,6 +482,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv6.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 
@@ -493,9 +491,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var a = document.getElementById("thal");
     var x = document.getElementById("hrt");
     var y = document.getElementById("bld");
@@ -510,13 +510,16 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "none";
       k.style.display = "none";
+      l.style.display = "none";
       g.style.display = "block";
       f.style.display = "none";
+      s.style.display = "none";
       x.style.display = "block";
       sv4.style.display = "block";
       z.style.display = "none";
@@ -532,6 +535,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv7.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -554,6 +558,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv7.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 
@@ -562,9 +567,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var e = document.getElementById("mon");
     var x = document.getElementById("thal");
     var sv5 = document.getElementById("btn_save4");
@@ -579,15 +586,18 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "block";
       i.style.display = "none";
       j.style.display = "none";
       k.style.display = "none";
+      l.style.display = "none";
       g.style.display = "none";
       f.style.display = "none";
       x.style.display = "block";
       y.style.display = "none";
+      s.style.display = "none";
       e.style.display = "none";
       z.style.display = "none";
       a.style.display = "none";
@@ -602,6 +612,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       c.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -624,6 +635,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       c.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 
@@ -632,10 +644,12 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var e = document.getElementById("mon");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var x = document.getElementById("wt");
     var y = document.getElementById("bld");
     var z = document.getElementById("hrt");
@@ -649,11 +663,14 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "none";
       i.style.display = "block";
       j.style.display = "none";
       k.style.display = "none";
+      s.style.display = "none";
+      l.style.display = "none";
       g.style.display = "none";
       f.style.display = "none";
       x.style.display = "block";
@@ -672,6 +689,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv7.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -694,6 +712,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv7.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 
@@ -702,9 +721,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var d = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var e = document.getElementById("mon");
     var x = document.getElementById("ht");
     var y = document.getElementById("bld");
@@ -719,14 +740,17 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (x.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "block";
       k.style.display = "none";
+      l.style.display = "none";
       g.style.display = "none";
       f.style.display = "none";
       x.style.display = "block";
+      s.style.display = "none";
       y.style.display = "none";
       e.style.display = "none";
       z.style.display = "none";
@@ -741,6 +765,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv2.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
@@ -763,6 +788,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv2.style.display = "none";
       d.style.display = "none";
       sv8.style.display = "none";
+      sv9.style.display = "none";
 
     }
   }
@@ -772,9 +798,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     var i = document.getElementById("fri");
     var j = document.getElementById("sat");
     var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
     var g = document.getElementById("wed");
     var f = document.getElementById("tue");
     var r = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
     var x = document.getElementById("bld");
     var z = document.getElementById("hrt");
     var y = document.getElementById("cole");
@@ -789,6 +817,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv6 = document.getElementById("btn_save5");
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
     if (r.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
@@ -797,6 +826,7 @@ $select_all_weeks = mysqli_query($conn, $query);
       g.style.display = "none";
       f.style.display = "none";
       r.style.display = "block";
+      s.style.display = "none";
       e.style.display = "none";
       x.style.display = "none";
       y.style.display = "none";
@@ -812,11 +842,13 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv4.style.display = "none";
       sv5.style.display = "none";
       sv8.style.display = "block";
+      sv9.style.display = "none";
     } else {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "none";
       k.style.display = "none";
+      l.style.display = "none";
       g.style.display = "none";
       f.style.display = "none";
       e.style.display = "none";
@@ -835,6 +867,86 @@ $select_all_weeks = mysqli_query($conn, $query);
       sv3.style.display = "none";
       sv4.style.display = "none";
       sv5.style.display = "none";
+      sv9.style.display = "none";
+    }
+  }
+
+  function myFunction7() {
+    var h = document.getElementById("thur");
+    var i = document.getElementById("fri");
+    var j = document.getElementById("sat");
+    var k = document.getElementById("remark");
+    var l = document.getElementById("lecremark");
+    var g = document.getElementById("wed");
+    var f = document.getElementById("tue");
+    var r = document.getElementById("rmk");
+    var s = document.getElementById("lrmk");
+    var x = document.getElementById("bld");
+    var z = document.getElementById("hrt");
+    var y = document.getElementById("cole");
+    var a = document.getElementById("thal");
+    var b = document.getElementById("wt");
+    var c = document.getElementById("ht");
+    var e = document.getElementById("mon");
+    var sv2 = document.getElementById("btn_save1");
+    var sv3 = document.getElementById("btn_save2");
+    var sv4 = document.getElementById("btn_save3");
+    var sv5 = document.getElementById("btn_save4");
+    var sv6 = document.getElementById("btn_save5");
+    var sv7 = document.getElementById("btn_save6");
+    var sv8 = document.getElementById("btn_save7");
+    var sv9 = document.getElementById("btn_save8");
+    if (r.style.display === "none") {
+      h.style.display = "none";
+      i.style.display = "none";
+      j.style.display = "none";
+      k.style.display = "none";
+      l.style.display = "block";
+      g.style.display = "none";
+      f.style.display = "none";
+      r.style.display = "none";
+      s.style.display = "block";
+      e.style.display = "none";
+      x.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "none";
+      a.style.display = "none";
+      sv2.style.display = "none";
+      b.style.display = "none";
+      // d.style.display = "none";
+      sv6.style.display = "none";
+      c.style.display = "none";
+      sv7.style.display = "none";
+      sv3.style.display = "none";
+      sv4.style.display = "none";
+      sv5.style.display = "none";
+      sv8.style.display = "none";
+      sv9.style.display = "block";
+    } else {
+      h.style.display = "none";
+      i.style.display = "none";
+      j.style.display = "none";
+      k.style.display = "none";
+      l.style.display = "none";
+      g.style.display = "none";
+      f.style.display = "none";
+      e.style.display = "none";
+      r.style.display = "none";
+      x.style.display = "none";
+      a.style.display = "none";
+      sv2.style.display = "none";
+      y.style.display = "none";
+      z.style.display = "none";
+      b.style.display = "none";
+      c.style.display = "none";
+      sv7.style.display = "none";
+      // d.style.display = "none";
+      sv8.style.display = "none";
+      sv6.style.display = "none";
+      sv3.style.display = "none";
+      sv4.style.display = "none";
+      sv5.style.display = "none";
+      sv9.style.display = "none";
     }
   }
 </script>

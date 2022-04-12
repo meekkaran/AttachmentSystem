@@ -18,6 +18,7 @@ if (isset($_GET['logout'])) {
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="templates/style1.css">
     <link rel="stylesheet" href="text/css" href="templates/style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -38,6 +39,9 @@ if (isset($_GET['logout'])) {
                         <li><a href="supervisor/login.php">Supervisor</a></li>
                     </ul>
                 </li>
+                <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
+                        <?php echo $_SESSION['lec_id']; ?></span>
+                </li>
             </ul>
         </nav>
     </header>
@@ -55,10 +59,6 @@ if (isset($_GET['logout'])) {
         <?php endif ?>
 
         <!-- logged in user information -->
-        <?php if (isset($_SESSION['lec_id'])) : ?>
-            <p>Welcome <strong><?php echo $_SESSION['lec_id']; ?></strong></p>
-            <p> <a href="index.php?logout='1'" style="color: red;">logout</a> </p>
-        <?php endif ?>
     </div>
     <div class="article">
 
