@@ -313,7 +313,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['lec_remarks_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' WHERE logbk_id = ''";
+    $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' , week_id = '{$week_title}' WHERE logbk_id = '27'";
     $create_post_query = mysqli_query($conn, $query);
     header('location: studentlogbook.php');
     exit(0);
