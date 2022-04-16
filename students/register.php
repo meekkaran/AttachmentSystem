@@ -1,4 +1,6 @@
+<?php include('includes/logout.php') ?>
 <?php include('includes/server.php') ?>
+
 <!DOCTYPE html>
 <html>
 

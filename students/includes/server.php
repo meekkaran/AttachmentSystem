@@ -71,7 +71,7 @@ if (isset($_POST['reg_user'])) {
   	mysqli_query($db, $query);
   	$_SESSION['admissionumber'] = $admissionnumber;
   	$_SESSION['success'] = "You are now logged in";
-  	header('location: logbook.php');
+  	header('location: login.php');
   }
 }
 

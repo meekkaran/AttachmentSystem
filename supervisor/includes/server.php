@@ -78,7 +78,7 @@ if (isset($_POST['reg_user'])) {
     $_SESSION['role_id'] = $role_id;
     // $_SESSION['name'] = $results;
     $_SESSION['success'] = "You are now logged in";
-    header('location: assigned.php');
+    header('location: login.php');
   }
 }
 

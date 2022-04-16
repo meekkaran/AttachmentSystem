@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+.article h2{
+  color:#fff;
+  text-align: center;
+}
+.formcontainer{
+  position: absolute;
+  top:30%;
+  left:30%;
+  border: 1px solid maroon;
+}
+
+form input{
+  padding:10px 20px;
+}
