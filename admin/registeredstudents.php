@@ -106,7 +106,8 @@
                 <th>Company Website</th>
                 <th>Strarting Date</th>
                 <th>Date Created</th>
-                <th>Actions</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -138,6 +139,7 @@
                 echo "<td>{$companywebsite}</td>";
                 echo "<td>{$startingdate}</td>";
                 echo "<td>{$created_at}</td>";
+                echo "<td><a href='updatestudents.php?update=<?php echo $admissionnumber ?>'>Update</a></td>";
                 echo "<td><a href='registeredstudents.php?delete={$admissionnumber}'>Delete</a></td>";
                 echo "</tr>";
             }

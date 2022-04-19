@@ -8,9 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CIAMS</title>
     <link rel="stylesheet" href="./templates/admin.css" />
-    <link rel="stylesheet" href="view_registered_students.css" />
-
-    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js" />
     </script>
 
 </head>
@@ -92,19 +89,19 @@
 
 
     <br>
-    <table align='center' width='100%' cellpading='3' cellspacing='2' bgcolor=''>
+    <table align='center' width='100%' bgcolor=''>
         <thead>
             <tr>
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Admission Number</th>
-                <th>Company Name</th>
-                <th>Company Address</th>
-                <th>Company Email</th>
-                <th>Company Contact</th>
-                <th>Company Website</th>
-                <th>Strarting Date</th>
+                <th>Adm. Number</th>
+                <th>Comp. Name</th>
+                <th>Comp. Address</th>
+                <th>Comp. Email</th>
+                <th>Comp. Contact</th>
+                <th>Comp. Website</th>
+                <th>Strart Date</th>
                 <th>Date Created</th>
                 <th>Actions</th>
             </tr>

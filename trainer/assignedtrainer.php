@@ -12,7 +12,7 @@ if (!isset($_SESSION['trainer_id'])) {
 
 <head>
     <title>TrainerStudentsPage</title>
-    <link rel="stylesheet" href="templates/style.css">
+    <link rel="stylesheet" href="templates/style1.css">
     <link rel="stylesheet" href="../style.css">
 </head>
 
@@ -46,26 +46,21 @@ if (!isset($_SESSION['trainer_id'])) {
     <div class="article">
         <h2>Enter Students Registration Number</h2>
         <div class="formcontainer">
+
             <form action="assignedtrainer.php" method="post">
                 <label>Admission Number:</label><br>
-                <input type="text" name="admissionnumber"><br>
-                <label>Admission Number:</label><br>
-                <input type="text" name="admissionnumber"><br>
-                <label>Admission Number:</label><br>
-                <input type="text" name="admissionnumber"><br>
+                <input type="text" name="admission_number"><br>
                 <br>
                 <hr>
-                <input type="submit" value="Save Changes" name="save_assigned" class="savebtn" />
+                <input type="submit" value="Save Changes" name="savechanges" class="savebtn" />
             </form>
         </div>
         <?php
         $db = mysqli_connect('localhost', 'root', '', 'supervisedb');
-        if (isset($_POST['save_assigned'])) {
-            $admissionnumber = $_POST['admissionnumber'];
-            $trainer_id = $_POST['trainer_id'];
-            $query = "INSERT INTO assigned_trainer(student_id, trainer_id) ";
-            $query .=
-                "VALUES({$admissionnumber},'{$trainer_id}') ";
+        if (isset($_POST['savechanges'])) {
+            $admissionnumber = $_POST['admission_number'];
+            // $query = "INSERT INTO assigned_trainer( admissionnumber,trainer_id) VALUES({$admissionnumber},'{$_SESSION['trainer_id']}') ";
+            $query = ("INSERT INTO assigned_trainer (admission_number) SELECT admission_number FROM students WHERE student_id = '6';");
             $create_post_query = mysqli_query($db, $query);
             // confirmQuery($create_post_query);
         }

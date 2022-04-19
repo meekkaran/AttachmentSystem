@@ -120,6 +120,7 @@
                 echo "<td>{$mobile}</td>";
                 echo "<td>{$role_id}</td>";
                 echo "<td>{$created_at}</td>";
+                echo "<td><a href='registeredssupervisors.php?update={$role_id}'>Update</a></td>";
                 echo "<td><a href='registeredssupervisors.php?delete={$role_id}'>Delete</a></td>";
                 echo "</tr>";
             }

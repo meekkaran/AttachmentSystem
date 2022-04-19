@@ -21,12 +21,16 @@
 			<input type="text" name="name" value="">
 		</div>
 		<div class="input-group">
-			<label>Faculty</label>
-			<input type="text" name="faculty" value="">
+			<label for="faculty">Faculty:</label>
+			<select name="faculty">
+				<option value="science">Science</option>
+			</select>
 		</div>
 		<div class="input-group">
-			<label>Department</label>
-			<input type="text" name="department" value="">
+			<label for="department">Department:</label>
+			<select name="department">
+				<option value="computerscience">Computer Science</option>
+			</select>
 		</div>
 		<div class="input-group">
 			<label>Email</label>
