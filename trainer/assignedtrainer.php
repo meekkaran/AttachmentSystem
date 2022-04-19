@@ -1,3 +1,4 @@
+<?php include "./includes/db.php"; ?>
 <?php
 session_start();
 
@@ -26,7 +27,8 @@ if (!isset($_SESSION['trainer_id'])) {
 
         <nav class="navbar">
             <ul>
-                <li><a href="#">Students Logbooks</a></li>
+                <li><a href="assignedtrainer.php">Add Student</a></li>
+                <li><a href="">Students Logbooks</a></li>
                 <li><a href="#">Logout</a></li>
                 <li><a href="#">My Dashboard +</a>
                     <ul>
@@ -59,46 +61,47 @@ if (!isset($_SESSION['trainer_id'])) {
         $db = mysqli_connect('localhost', 'root', '', 'supervisedb');
         if (isset($_POST['savechanges'])) {
             $admissionnumber = $_POST['admission_number'];
-            // $query = "INSERT INTO assigned_trainer( admissionnumber,trainer_id) VALUES({$admissionnumber},'{$_SESSION['trainer_id']}') ";
-            $query = ("INSERT INTO assigned_trainer (admission_number) SELECT admission_number FROM students WHERE student_id = '6';");
+            $query = "INSERT INTO assigned_trainer( admission_number,trainer_id) VALUES({$admissionnumber},'{$_SESSION['trainer_id']}') ";
             $create_post_query = mysqli_query($db, $query);
             // confirmQuery($create_post_query);
         }
         ?>
 
     </div>
+    <div class="logbooktable">
+        <table class="table table-striped" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
+            <tr>
+                <th><b>Full Name</b></th>
+                <th><b>Company Name</b></th>
+                <th><b>Company Address</b></th>
+                <th><b>Action</b></th>
+            </tr>
+            <tbody id="show_data">
 
-    <!-- <table class="table table-striped" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
-        <tr>
-            <th><b>Full Name</b></th>
-            <th><b>Company Name</b></th>
-            <th><b>Company Address</b></th>
-            <th><b>Action</b></th>
-        </tr>
-        <tbody id="show_data">
+                <?php
+                $trainer_id = $_SESSION['trainer_id'];
+                $conn = mysqli_connect("localhost", "root", "", "supervisedb");
+                $sql = "SELECT * FROM assigned_trainer LEFT JOIN students ON students.admission_number=assigned_trainer.admission_number WHERE assigned_trainer.trainer_id=$trainer_id";
+                $res = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($res)) {
+                    $id = $row['id'];
+                    $name = $row['name'];
+                    $company = $row['companyname'];
+                    $companyaddress = $row['companyaddress'];
+                    echo "<tr>";
+                    echo "<td>{$name}</td>";
+                    echo "<td>{$company}</td>";
+                    echo "<td>{$companyaddress}</td>";
+                    echo "<td><a href='studentlogbook.php?edit={$id}'>Logbook</a></td>";
+                    echo "</tr>";
+                }
+                ?>
 
-            <?php
-            $trainer_id = $_SESSION['trainer_id'];
-            $conn = mysqli_connect("localhost", "root", "", "supervisedb");
-            // $sql = "SELECT * FROM assigned LEFT JOIN students ON students.id=assigned.student_id WHERE assigned.lecturer_id=$trainer_id";
-            $res = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($res)) {
-                $id = $row['id'];
-                $name = $row['name'];
-                $company = $row['companyname'];
-                $companyaddress = $row['companyaddress'];
-                echo "<tr>";
-                echo "<td>{$name}</td>";
-                echo "<td>{$company}</td>";
-                echo "<td>{$companyaddress}</td>";
-                // echo "<td><a href='categories.php?delete={$id}'>Delete</a></td>";
-                echo "<td><a href='studentlogbook.php?edit={$id}'>Logbook</a></td>";
-                echo "</tr>";
-            }
-            ?>
+            </tbody>
+        </table>
+    </div>
 
-        </tbody>
-    </table> -->
+
 
     </div>
 </body>
