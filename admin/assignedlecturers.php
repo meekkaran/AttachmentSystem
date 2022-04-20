@@ -43,6 +43,12 @@
                 <a class="menu_items_link" href="remarks.php">
                     <li class="menu_items_list">Supervisors Remarks</li>
                 </a>
+                <a class="menu_items_link" href="registeredtrainers.php">
+                    <li class="menu_items_list">Registered Trainers</li>
+                </a>
+                <a class="menu_items_link" href="studentstrainers.php">
+                    <li class="menu_items_list">Students' Trainers</li>
+                </a>
                 <a class="menu_items_link" href="changepassword.php">
                     <li class="menu_items_list">Change Password</li>
                 </a>

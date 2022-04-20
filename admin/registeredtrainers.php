@@ -43,12 +43,6 @@
                 <a class="menu_items_link" href="remarks.php">
                     <li class="menu_items_list">Supervisors Remarks</li>
                 </a>
-                <a class="menu_items_link" href="registeredtrainers.php">
-                    <li class="menu_items_list">Registered Trainers</li>
-                </a>
-                <a class="menu_items_link" href="studentstrainers.php">
-                    <li class="menu_items_list">Students' Trainers</li>
-                </a>
                 <a class="menu_items_link" href="changepassword.php">
                     <li class="menu_items_list">Change Password</li>
                 </a>
@@ -62,7 +56,7 @@
             <div class="container-fluid">
                 <div class="panel">
                     <div class="panel-heading phead">
-                        <h2 class="panel-title ptitle"> View Registered Students</h2>
+                        <h2 class="panel-title ptitle"> View Registered Lecturers</h2>
                     </div>
                     <div class="panel-body pbody">
 
@@ -104,49 +98,30 @@
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Admission Number</th>
-                <th>Company Name</th>
-                <th>Company Address</th>
-                <th>Company Email</th>
-                <th>Company Contact</th>
-                <th>Company Website</th>
-                <th>Strarting Date</th>
+                <th>Title</th>
                 <th>Date Created</th>
-                <th>Update</th>
-                <th>Delete</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $query = "SELECT * FROM  students";
+            $query = "SELECT * FROM  trainers";
             $query_select_all = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($query_select_all)) {
-                $name = $row['name'];
+                $trainername = $row['trainername'];
                 $email = $row['email'];
                 $mobile = $row['mobile'];
-                $admissionnumber = $row['admission_number'];
-                $companyname = $row['companyname'];
-                $companyaddress = $row['companyaddress'];
-                $companyemail = $row['companyemail'];
-                $companycontact = $row['companycontact'];
-                $companywebsite = $row['companywebsite'];
-                $startingdate = $row['startingdate'];
+                $title = $row['title'];
                 $created_at = $row['created_at'];
 
                 echo "<tr>";
-                echo "<td>{$name}</td>";
+                echo "<td>{$trainername}</td>";
                 echo "<td>{$email}</td>";
                 echo "<td>{$mobile}</td>";
-                echo "<td>{$admissionnumber}</td>";
-                echo "<td>{$companyname}</td>";
-                echo "<td>{$companyaddress}</td>";
-                echo "<td>{$companyemail}</td>";
-                echo "<td>{$companycontact}</td>";
-                echo "<td>{$companywebsite}</td>";
-                echo "<td>{$startingdate}</td>";
+                echo "<td>{$title}</td>";
                 echo "<td>{$created_at}</td>";
-                echo "<td><a href='updatestudents.php?update=<?php echo $admissionnumber ?>'>Update</a></td>";
-                echo "<td><a href='registeredstudents.php?delete={$admissionnumber}'>Delete</a></td>";
+                echo "<td><a href='registeredtrainers.php?update={$email}'>Update</a></td>";
+                echo "<td><a href='registeredtrainers.php?delete={$email}'>Delete</a></td>";
                 echo "</tr>";
             }
             ?>
@@ -154,9 +129,9 @@
             <?php
             if (isset($_GET['delete'])) {
                 $delete_id = $_GET['delete'];
-                $query = "DELETE FROM students WHERE student_id={$delete_id} ";
+                $query = "DELETE FROM trainers WHERE trainer_id={$delete_id} ";
                 $delete_query = mysqli_query($conn, $query);
-                header("location: registeredstudents.php");
+                header("location: registeredtrainers.php");
             }
             ?>
 
