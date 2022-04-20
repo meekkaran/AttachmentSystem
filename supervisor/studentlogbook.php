@@ -118,7 +118,7 @@ $select_all_weeks = mysqli_query($conn, $query);
           <input name="create_post7" type="submit" id="btn_save8" value="SUBMIT LECTURER REMARK" class="btn  sv9">
           <hr>
           <ul>
-            <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
+            <!-- <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li> -->
             <li class="listing"><a href="index.php">Logbook</a></li>
             <li class="listing"><a href="lec.php">Your Supervisor</a></li>
             <!-- <li class="listing"><a href="">Profile</a></li> -->

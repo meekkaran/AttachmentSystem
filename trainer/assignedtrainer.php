@@ -92,7 +92,7 @@ if (!isset($_SESSION['trainer_id'])) {
                     echo "<td>{$name}</td>";
                     echo "<td>{$company}</td>";
                     echo "<td>{$companyaddress}</td>";
-                    echo "<td><a href='studentlogbook.php?edit={$id}'>Logbook</a></td>";
+                    echo "<td><a href='trainerstudentlogbook.php?edit={$id}'>Logbook</a></td>";
                     echo "</tr>";
                 }
                 ?>

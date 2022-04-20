@@ -106,8 +106,8 @@ if (isset($_POST['reg_user'])) {
 
 if (isset($_POST['login_user'])) {
   // TO PREVENT FROM MYSQLI INJECTION
-  $admissionnumber = stripcslashes($admissionnumber);
-  $password = stripcslashes($password);
+  // $admissionnumber = stripcslashes($admissionnumber);
+  // $password = stripcslashes($password);
 
   $admissionnumber = mysqli_real_escape_string($db, $_POST['admissionnumber']);
   $password = mysqli_real_escape_string($db, $_POST['password']);
