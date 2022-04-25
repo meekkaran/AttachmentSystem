@@ -1,7 +1,12 @@
+<?php include "./includes/db.php"; ?>
 <?php
 session_start();
 
 if (!isset($_SESSION['role_id'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: login.php');
+}
+if (!isset($_SESSION['lecname'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: login.php');
 }
@@ -15,7 +20,7 @@ if (isset($_GET['logout'])) {
 <html>
 
 <head>
-    <title>Home</title>
+    <title>Lecturer</title>
     <link rel="stylesheet" type="text/css" href="templates/style1.css">
     <link rel="stylesheet" href="text/css" href="templates/style.css">
     <link rel="stylesheet" href="../style.css">
@@ -31,7 +36,7 @@ if (isset($_GET['logout'])) {
 
         <nav class="navbar">
             <ul>
-                <li><a href="#">Students Logbooks</a></li>
+                <li><a href="assigned.php">Students Logbooks</a></li>
                 <li><a href="#">Logout</a></li>
                 <li><a href="#">My Dashboard +</a>
                     <ul>
@@ -40,7 +45,7 @@ if (isset($_GET['logout'])) {
                     </ul>
                 </li>
                 <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
-                        <?php echo $_SESSION['lec_id']; ?></span>
+                        <?php echo $_SESSION['lecname']; ?></span>
                 </li>
             </ul>
         </nav>

@@ -6,6 +6,7 @@ if (!isset($_SESSION['student_id'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: login.php');
 }
+var_dump(isset($_SESSION['student_id']));
 // if (isset($_GET['logout'])) {
 //   session_destroy();
 //   unset($_SESSION['student_id']);

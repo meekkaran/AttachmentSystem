@@ -76,6 +76,7 @@ if (isset($_POST['reg_user'])) {
   			  VALUES('$lecname', '$faculty', '$department', '$email', '$mobile', '$role_id', '$password', now())";
     mysqli_query($db, $query);
     $_SESSION['role_id'] = $role_id;
+    $_SESSION['lecname'] = $lecname;
     // $_SESSION['name'] = $results;
     $_SESSION['success'] = "You are now logged in";
     header('location: login.php');
@@ -113,6 +114,7 @@ if (isset($_POST['login_user'])) {
       // $_SESSION['loggedin'] = true;
       $_SESSION['lec_id'] = $reg_user_id;
       $_SESSION['role_id'] = $role_id;
+      $_SESSION['lecname'] = $lecname;
       //  $_SESSION['name'] = $name;
       // $_SESSION['name'] = $results->name;
       $_SESSION['success'] = "You are now logged in";

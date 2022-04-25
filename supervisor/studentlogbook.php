@@ -46,25 +46,24 @@ $select_all_weeks = mysqli_query($conn, $query);
   <header>
     <a href="#" class="logo">CIAMS</a>
 
-    <!-- <input type="checkbox" id="menu-bar">
-    <label for="menu-bar">Menu</label> -->
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar">Menu</label>
 
-    <div class="navbar">
+    <nav class="navbar">
       <ul>
-        <li><a href="logbook.php">Logbook</a></li>
-        <li><a href="submitreports.php">Submit Report</a></li>
-        <li><a href="index.php">Logout</a></li>
-        <li><a href="#">Dashboard +</a>
+        <li><a href="assigned.php">Students Logbooks</a></li>
+        <li><a href="#">Logout</a></li>
+        <li><a href="#">My Dashboard +</a>
           <ul>
-            <li><a href="#">My Profile</a></li>
-            <li><a href="#">My Details</a></li>
+            <li><a href="students/login.php">My Details</a></li>
+            <li><a href="supervisor/login.php">Supervisor</a></li>
           </ul>
         </li>
         <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
-            <?php echo $_SESSION['lec_id']; ?></span>
+            <?php echo $_SESSION['lecname']; ?></span>
         </li>
       </ul>
-    </div>
+    </nav>
   </header>
   <div class="logbookbody">
     <form method="post" action="studentlogbook.php">
@@ -79,46 +78,22 @@ $select_all_weeks = mysqli_query($conn, $query);
           </select>
         </div>
         <div class="form-group">
-          <input type="button" value="MONDAY" name="mon_days" onclick="myFunction()" class="btn">
-          <input type="button" value="TUESDAY" name="tue_days" onclick="myFunction1()" class="btn">
-          <input type="button" value="WEDNESDAY" name="wed_days" onclick="myFunction2()" class="btn">
-          <input type="button" value="THURSDAY" name="thur_days" onclick="myFunction3()" class="btn">
-          <input type="button" value="FRIDAY" name="fri_days" onclick="myFunction4()" class="btn">
-          <input type="button" value="SATURDAY" name="sat_days" onclick="myFunction5()" class="btn">
-          <button onclick="myFunction6()" type="button" class="btn">WEEK REMARK</button>
           <button onclick="myFunction7()" type="button" class="btn">LECTURER REMARK</button>
         </div>
         <div class="aside">
           <hr>
           <label for="inputEmail4" style="color:black;">TODAY NOTES</label>
-          <input type="text" id="mon" name="mon_day" class="mon" value="MONDAY" placeholder="MONDAY" readonly />
-          <textarea type="text" id="bld" name="mon_notes" class="form-control bld" placeholder="MONDAY NOTES"></textarea>
-          <input type="text" id="tue" name="tue_day" class="tue" value="TUESDAY" placeholder="TUESDAY" readonly />
-          <textarea type="text" id="cole" name="tue_notes" class="form-control cole" placeholder="TUESDAY NOTES"></textarea>
-          <input type="text" id="wed" name="wed_day" class="tue" value="WEDNESDAY" placeholder="WEDNESDAY" readonly />
-          <textarea type="text" id="hrt" name="wed_notes" class="form-control hrt" placeholder="WEDNESDAY NOTES"></textarea>
-          <input type="text" id="thur" name="thur_day" class="thur" value="THURSDAY" placeholder="THURSDAY" readonly />
-          <textarea type="text" id="thal" name="thur_notes" class="form-control thal" placeholder="THURSDAY NOTES"></textarea>
-          <input type="text" id="fri" name="fri_day" class="fri" value="FRIDAY" placeholder="FRIDAY" readonly />
-          <textarea type="text" id="wt" name="fri_notes" class="form-control wt" placeholder="FRIDAY NOTES"></textarea>
-          <input type="text" id="sat" name="sat_day" class="sat" value="SATURDAY" placeholder="SATURDAY" readonly />
-          <textarea type="text" id="ht" name="sat_notes" class="form-control ht" placeholder="SATURDAY NOTES"></textarea>
-          <input type="text" id="remark" name="remark" class="remark" value="REMARK" placeholder="REMARK" readonly />
-          <textarea type="text" id="rmk" name="remarks_notes" class="form-control rmk" placeholder="WEEKLY REMARK"></textarea>
           <input type="text" id="lecremark" name="lecremark" class="lecremark" value="LECREMARK" placeholder="LECTURER REMARK" readonly />
           <textarea type="text" id="lrmk" name="lec_remarks_notes" class="form-control lrmk" placeholder="LECTURER WEEKLY REMARK"></textarea>
           <!-- buttons -->
-          <input type="submit" name="create_post" id="btn_save1" value="MONDAY SUBMIT" class="btn sv2">
-          <input name="create_post1" type="submit" id="btn_save2" value="TUESDAY SUBMIT" class="btn sv3">
-          <input name="create_post2" type="submit" id="btn_save3" value="WEDNESDAY SUBMIT" class="btn sv4">
-          <input name="create_post3" type="submit" id="btn_save4" value="THURSDAY SUBMIT" class="btn sv5">
-          <input name="create_post4" type="submit" id="btn_save5" value="FRIDAY SUBMIT" class="btn sv6">
-          <input name="create_post5" type="submit" id="btn_save6" value="SATURDAY SUBMIT" class="btn  sv7">
-          <input name="create_post6" type="submit" id="btn_save7" value="SUBMIT REMARK" class="btn  sv8">
           <input name="create_post7" type="submit" id="btn_save8" value="SUBMIT LECTURER REMARK" class="btn  sv9">
           <hr>
           <ul>
-            <!-- <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li> -->
+            if()isset($_SESSION['student_']){}
+            <li class="listing"><a href="profile.php"><?php if (isset($_SESSION['student_'])) {
+                                                      }
+                                                      echo $_SESSION['name']; ?></a></li>
+
             <li class="listing"><a href="index.php">Logbook</a></li>
             <li class="listing"><a href="lec.php">Your Supervisor</a></li>
             <!-- <li class="listing"><a href="">Profile</a></li> -->
@@ -145,6 +120,9 @@ $select_all_weeks = mysqli_query($conn, $query);
         <tbody id="show_data">
 
           <?php
+          if (isset($_GET['edit'])) {
+            $student_id = $_GET['edit'];
+          }
           if (isset($_SESSION['student_id'])) {
             $student_id = $_SESSION['student_id'];
             foreach ($select_all_weeks as $key => $t) {
@@ -185,125 +163,7 @@ $select_all_weeks = mysqli_query($conn, $query);
 
 
   <?php
-  // monday input
-  if (isset($_POST['create_post'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['mon_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['mon_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // tuesday input
-  if (isset($_POST['create_post1'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['tue_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['tue_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // wednesday input
-  if (isset($_POST['create_post2'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['wed_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['wed_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, lec_id, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // thursday input
-  if (isset($_POST['create_post3'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['thur_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['thur_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // friday input
-  if (isset($_POST['create_post4'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['fri_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['fri_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // wednesday input
-  if (isset($_POST['create_post5'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['sat_day'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['sat_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
-  // remarks input
-  if (isset($_POST['create_post6'])) {
-    global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
-    $day_title = $_POST['remark'];
-    $week_title = $_POST['week_id'];
-    $day_notes  = $_POST['remarks_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
-    $create_post_query = mysqli_query($conn, $query);
-    header('location: logbook.php');
-    exit(0);
-    // confirmQuery($create_post_query);
-  }
+
   //lecturer remarks input
   if (isset($_POST['create_post7'])) {
     global $conn;
@@ -312,11 +172,16 @@ $select_all_weeks = mysqli_query($conn, $query);
     $day_title = $_POST['lecremark'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['lec_remarks_notes'];
-    $student_id = $_SESSION['student_id'];
-    $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' WHERE week_id = '{$week_title}'";
+    $lec_id = $_SESSION['lec_id'];
+
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query .=
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', '{$day_notes}', NULL) ";
+
+    // $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' WHERE  week_id = '{$week_title}'";
+
+
     // $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' , week_id = '{$week_title}' WHERE logbk_id = '27'";
-
-
     // $query = "UPDATE lec_comments SET lecomment = '{$day_notes}' , week_id = '{$week_title}' WHERE logbk_id = '27'";
     // $query = "INSERT INTO lec_comments(student_id, lecomment,week_id) ";
     // $query .=
@@ -849,7 +714,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     var sv7 = document.getElementById("btn_save6");
     var sv8 = document.getElementById("btn_save7");
     var sv9 = document.getElementById("btn_save8");
-    if (r.style.display === "none") {
+    if (n.style.display === "none") {
       h.style.display = "none";
       i.style.display = "none";
       j.style.display = "none";

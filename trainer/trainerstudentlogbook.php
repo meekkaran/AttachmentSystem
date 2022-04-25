@@ -61,7 +61,7 @@ $select_all_weeks = mysqli_query($conn, $query);
                     </ul>
                 </li>
                 <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
-                        <?php echo $_SESSION['trainer_id']; ?></span>
+                        <?php echo $_SESSION['trainername']; ?></span>
                 </li>
             </ul>
         </div>

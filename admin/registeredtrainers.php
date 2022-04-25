@@ -9,8 +9,6 @@
     <title>CIAMS</title>
     <link rel="stylesheet" href="./templates/admin.css" />
     <link rel="stylesheet" href="view_registered_students.css" />
-
-    <script type="text/javascript" src="../../js/jquery-3.1.1.min.js" />
     </script>
 
 </head>
