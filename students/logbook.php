@@ -1,3 +1,4 @@
+<?php include "./includes/db.php"; ?>
 <?php
 session_start();
 ob_start();
@@ -6,27 +7,6 @@ if (!isset($_SESSION['student_id'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: login.php');
 }
-var_dump(isset($_SESSION['student_id']));
-// if (isset($_GET['logout'])) {
-//   session_destroy();
-//   unset($_SESSION['student_id']);
-//   header("location: login.php");
-// }
-
-// variable array $db that hold each parameters necessary to connect to the database
-$db['db_host'] = "localhost";
-$db['db_user'] = "root";
-$db['db_pass'] = "";
-$db['db_name'] = "supervisedb";
-
-// foreach loop that loops through array $db to convert parameters to constants
-foreach ($db as $key => $value) {
-  // define function that converts the paramerts looped to constants and uppercase
-  define(strtoupper($key), $value);
-}
-
-// connecting the database from the converted parameters into uppercase
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 $query = "SELECT * FROM tbl_weeks";
 $select_all_weeks = mysqli_query($conn, $query);
@@ -116,10 +96,7 @@ $select_all_weeks = mysqli_query($conn, $query);
           <hr>
           <ul>
             <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
-            <li class="listing"><a href="index.php">Logbook</a></li>
             <li class="listing"><a href="lec.php">Your Supervisor</a></li>
-            <!-- <li class="listing"><a href="">Profile</a></li> -->
-            <li class="listing"><a href="index.php?logout='1'" style="color: red;">logout</a></li>
           </ul>
         </div>
       </div>
@@ -141,7 +118,7 @@ $select_all_weeks = mysqli_query($conn, $query);
           <th><b>LECTURER REMARKS</b></th>
           <th><b>TRAINER REMARKS</b></th>
         </tr>
-        <tbody id="show_data">
+        <!-- <tbody id="show_data">
 
           <?php
           if (isset($_SESSION['student_id'])) {
@@ -179,7 +156,7 @@ $select_all_weeks = mysqli_query($conn, $query);
           }
           ?>
 
-        </tbody>
+        </tbody> -->
       </table>
     </div>
   </div>

@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+body{
+    box-sizing: border-box;
+}
+/* top navigation */
+#top-navigation{
+    height:50px;
+    background-color: #800000;
+    position: fixed;
+    width: 100%;
+}
+#top-navigation #logo{
+    color: #fff;
+    float:left;
+    width:150px; 
+    height:50px;
+    position:relative;
+    left:20px;
+    font-size: 20px;
+}
+#top-navigation #student_name {
+    color: whitesmoke;
+    float: right;
+    margin-right: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+    font-family: serif;
+  }
+
+/* leftsidebar */
+.sidebar{
+    position:fixed;
+    background:#800000;
+    width:200px;
+    height:100%;
+    top:50px;
+    left:0;
+    z-index:1;
+}
+
+.sidebar #menu_list a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+  }
+.sidebar #menu_list li {
+    text-decoration-style: none;
+    padding: 14px 10px 14px 12px;
+    border-bottom: 1px solid white;
+    font-weight: lighter;
+    }
+.sidebar #menu_list li:hover {
+    background-color: orange;
+    transition: 0.3s;
+    padding-left: 16px;
+    }
+/* maincontent */
+.main{
+   margin-left: 200px;
+   padding: 5px; 
+}
+.main h2 {
+    margin-top: 50px;
+}
+/* table */
+table,
+th,
+td {
+  border: 2px solid #800000;
+  border-collapse: collapse;
+}
+th{
+    color:#800000;
+    font-weight: bold;
+}

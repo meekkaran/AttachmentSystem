@@ -50,21 +50,7 @@ if (isset($_GET['logout'])) {
             </ul>
         </nav>
     </header>
-    <div class="nav">
-        <!-- notification message -->
-        <?php if (isset($_SESSION['success'])) : ?>
-            <div class="error success">
-                <h3>
-                    <?php
-                    echo $_SESSION['success'];
-                    unset($_SESSION['success']);
-                    ?>
-                </h3>
-            </div>
-        <?php endif ?>
 
-        <!-- logged in user information -->
-    </div>
     <div class="article">
 
         <table class="table table-striped" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
@@ -101,7 +87,6 @@ if (isset($_GET['logout'])) {
                     echo "</tr>";
                 }
                 ?>
-
             </tbody>
         </table>
 

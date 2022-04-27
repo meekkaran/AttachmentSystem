@@ -1,3 +1,4 @@
+<?php include "./includes/db.php"; ?>
 <?php
 session_start();
 ob_start();
@@ -6,26 +7,6 @@ if (!isset($_SESSION['lec_id'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: login.php');
 }
-// if (isset($_GET['logout'])) {
-//   session_destroy();
-//   unset($_SESSION['student_id']);
-//   header("location: login.php");
-// }
-
-// variable array $db that hold each parameters necessary to connect to the database
-$db['db_host'] = "localhost";
-$db['db_user'] = "root";
-$db['db_pass'] = "";
-$db['db_name'] = "supervisedb";
-
-// foreach loop that loops through array $db to convert parameters to constants
-foreach ($db as $key => $value) {
-  // define function that converts the paramerts looped to constants and uppercase
-  define(strtoupper($key), $value);
-}
-
-// connecting the database from the converted parameters into uppercase
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 $query = "SELECT * FROM tbl_weeks";
 $select_all_weeks = mysqli_query($conn, $query);
@@ -89,15 +70,8 @@ $select_all_weeks = mysqli_query($conn, $query);
           <input name="create_post7" type="submit" id="btn_save8" value="SUBMIT LECTURER REMARK" class="btn  sv9">
           <hr>
           <ul>
-            if()isset($_SESSION['student_']){}
-            <li class="listing"><a href="profile.php"><?php if (isset($_SESSION['student_'])) {
-                                                      }
-                                                      echo $_SESSION['name']; ?></a></li>
-
-            <li class="listing"><a href="index.php">Logbook</a></li>
-            <li class="listing"><a href="lec.php">Your Supervisor</a></li>
-            <!-- <li class="listing"><a href="">Profile</a></li> -->
-            <li class="listing"><a href="index.php?logout='1'" style="color: red;">logout</a></li>
+            <li class="listing"><a href="profile.php"><?php echo $_SESSION['name']; ?></a></li>
+            <li class="listing"><a href="lec.php">Your Students</a></li>
           </ul>
         </div>
       </div>
@@ -120,9 +94,6 @@ $select_all_weeks = mysqli_query($conn, $query);
         <tbody id="show_data">
 
           <?php
-          if (isset($_GET['edit'])) {
-            $student_id = $_GET['edit'];
-          }
           if (isset($_SESSION['student_id'])) {
             $student_id = $_SESSION['student_id'];
             foreach ($select_all_weeks as $key => $t) {
@@ -164,6 +135,24 @@ $select_all_weeks = mysqli_query($conn, $query);
 
   <?php
 
+  // monday input
+  if (isset($_POST['create_post'])) {
+    global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
+    $day_title = $_POST['mon_day'];
+    $week_title = $_POST['week_id'];
+    $day_notes  = $_POST['mon_notes'];
+    $student_id = $_SESSION['student_id'];
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query .=
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+    $create_post_query = mysqli_query($conn, $query);
+    header('location: logbook.php');
+    exit(0);
+    // confirmQuery($create_post_query);
+  }
+
   //lecturer remarks input
   if (isset($_POST['create_post7'])) {
     global $conn;
@@ -172,15 +161,13 @@ $select_all_weeks = mysqli_query($conn, $query);
     $day_title = $_POST['lecremark'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['lec_remarks_notes'];
-    $lec_id = $_SESSION['lec_id'];
+    // $lec_id = $_SESSION['lec_id'];
 
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
-    $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', '{$day_notes}', NULL) ";
-
+    // $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    // $query .=
+    //   "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', '{$day_notes}', NULL) ";
+    $query = "UPDATE logbookdata SET leccomment = '{$day_notes}' WHERE  week_id = '{$week_title}' AND student_id = '{$student_id}'";
     // $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' WHERE  week_id = '{$week_title}'";
-
-
     // $query = "UPDATE  logbookdata SET leccomment = '{$day_notes}' , week_id = '{$week_title}' WHERE logbk_id = '27'";
     // $query = "UPDATE lec_comments SET lecomment = '{$day_notes}' , week_id = '{$week_title}' WHERE logbk_id = '27'";
     // $query = "INSERT INTO lec_comments(student_id, lecomment,week_id) ";
@@ -189,6 +176,13 @@ $select_all_weeks = mysqli_query($conn, $query);
 
 
     $create_post_query = mysqli_query($conn, $query);
+    $res = mysqli_query($conn, $query);
+
+    if ($res) {
+      header('location: studentlogbook.php');
+    } else {
+      echo "Data didnt get to the db";
+    }
     header('location: studentlogbook.php');
     exit(0);
     // confirmQuery($create_post_query);
