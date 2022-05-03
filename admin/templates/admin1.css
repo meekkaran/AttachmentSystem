@@ -68,13 +68,45 @@ body{
     margin-top: 50px;
 }
 /* table */
-table,
-th,
-td {
-  border: 2px solid #800000;
-  border-collapse: collapse;
+table{
+    width:100%;
+    border-collapse: collapse;
+    border: 2px solid #800000;
 }
-th{
-    color:#800000;
+/* table th td {
+    border: 2px solid #800000;
+    border-collapse: collapse;
+} */
+table th{
+    padding: 10px;
     font-weight: bold;
+    font-size:1.2em;
+}
+table td {
+  font-size:1.1em;
+  padding:8px;
+  text-align: center;
+}
+.adminbtn{
+    border:1px solid black;
+    color: #fff;
+    background-color:darkred;
+    font-size: 1.1em;
+    padding: 4px 22px;
+    text-decoration: none;
+}
+.adminbtn:hover{
+    background-color: orange;
+}
+
+.adminbtn1{
+    border:1px solid black;
+    color: #fff;
+    background-color:#3c763d;
+    font-size: 1.1em;
+    padding: 4px 22px;
+    text-decoration: none;
+}
+.adminbtn1:hover{
+    background-color: orange;
 }

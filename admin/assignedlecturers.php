@@ -21,7 +21,7 @@
         <div class="sidebar">
             <ul id="menu_list">
                 <a class="menu_items_link" href="registeredstudents.php">
-                    <li class="menu_items_list" style="background-color:orange;padding-left:16px">Registered Students</li>
+                    <li class="menu_items_list">Registered Students</li>
                 </a>
                 <a class="menu_items_link" href="submitreports.php">
                     <li class="menu_items_list">Student Reports</li>
@@ -33,7 +33,7 @@
                     <li class="menu_items_list">Registered Supervisors</li>
                 </a>
                 <a class="menu_items_link" href="assignedlecturers.php">
-                    <li class="menu_items_list">Assign Supervisors</li>
+                    <li class="menu_items_list" style="background-color:orange;padding-left:16px">Assign Supervisors</li>
                 </a>
                 <a class="menu_items_link" href="remarks.php">
                     <li class="menu_items_list">Supervisors Remarks</li>
@@ -79,9 +79,9 @@
                         $select_all_lecturers = mysqli_query($db, $query);
                         // confirmQuery($select_all_categories);
                         while ($row = mysqli_fetch_assoc($select_all_lecturers)) {
-                            $stud_id = $row['lec_id'];
+                            $lec_id = $row['lec_id'];
                             $name = $row['lecname'];
-                            echo "<option value='{$stud_id}'>{$name}</option>";
+                            echo "<option value='{$lec_id}'>{$name}</option>";
                         }
                         ?>
                     </select>
@@ -97,6 +97,8 @@
                     $query = "INSERT INTO assigned(student_id, lecturer_id) ";
                     $query .=
                         "VALUES({$student},'{$lecturer}') ";
+                    // $query = "UPDATE lecturers SET Allocated = 'YES' WHERE lec_id ='{$lec_id}'";
+                    // $query = "UPDATE students SET Allocated = 'YES' WHERE stud_id ='{$stud_id}'";
                     $create_post_query = mysqli_query($db, $query);
                     // confirmQuery($create_post_query);
                 }

@@ -119,9 +119,6 @@ $select_all_weeks = mysqli_query($conn, $query);
         <tbody id="show_data">
 
           <?php
-          if (isset($_GET['edit'])) {
-            $student_id = $_GET['edit'];
-          }
           if (isset($_SESSION['student_id'])) {
             $student_id = $_SESSION['student_id'];
             foreach ($select_all_weeks as $key => $t) {

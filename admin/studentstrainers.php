@@ -20,7 +20,7 @@
         <div class="sidebar">
             <ul id="menu_list">
                 <a class="menu_items_link" href="registeredstudents.php">
-                    <li class="menu_items_list" style="background-color:orange;padding-left:16px">Registered Students</li>
+                    <li class="menu_items_list">Registered Students</li>
                 </a>
                 <a class="menu_items_link" href="submitreports.php">
                     <li class="menu_items_list">Student Reports</li>
@@ -41,7 +41,7 @@
                     <li class="menu_items_list">Registered Trainers</li>
                 </a>
                 <a class="menu_items_link" href="studentstrainers.php">
-                    <li class="menu_items_list">Students' Trainers</li>
+                    <li class="menu_items_list" style="background-color:orange;padding-left:16px">Students' Trainers</li>
                 </a>
                 <a class="menu_items_link" href="changepassword.php">
                     <li class="menu_items_list">Change Password</li>
@@ -57,68 +57,30 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Reg. Number</th>
-                        <th>Comp. Name</th>
-                        <th>Comp. Address</th>
-                        <th>Comp. Email</th>
-                        <th>Comp. Contact</th>
-                        <th>Comp. Website</th>
-                        <th>Strart Date</th>
-                        <th>Date Created</th>
-                        <th>Allocated</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th>Student Adm.No.</th>
+                        <th>TrainerId</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $query = "SELECT * FROM  students";
+                    $query = "SELECT * FROM  assigned_trainer";
                     $query_select_all = mysqli_query($conn, $query);
                     while ($row = mysqli_fetch_assoc($query_select_all)) {
                         $id = $row['id'];
-                        $name = $row['name'];
-                        $email = $row['email'];
-                        $mobile = $row['mobile'];
-                        $admissionnumber = $row['admission_number'];
-                        $companyname = $row['companyname'];
-                        $companyaddress = $row['companyaddress'];
-                        $companyemail = $row['companyemail'];
-                        $companycontact = $row['companycontact'];
-                        $companywebsite = $row['companywebsite'];
-                        $startingdate = $row['startingdate'];
-                        $created_at = $row['created_at'];
-                        $Allocated = $row['Allocated'];
+                        $admission_number = $row['admission_number'];
+                        $trainer_id = $row['trainer_id'];
+
 
                         echo "<tr>";
                         echo "<td>{$id}</td>";
-                        echo "<td>{$name}</td>";
-                        echo "<td>{$email}</td>";
-                        echo "<td>{$mobile}</td>";
-                        echo "<td>{$admissionnumber}</td>";
-                        echo "<td>{$companyname}</td>";
-                        echo "<td>{$companyaddress}</td>";
-                        echo "<td>{$companyemail}</td>";
-                        echo "<td>{$companycontact}</td>";
-                        echo "<td>{$companywebsite}</td>";
-                        echo "<td>{$startingdate}</td>";
-                        echo "<td>{$created_at}</td>";
-                        echo "<td>{$Allocated}</td>";
-                        echo "<td><a href='updatestudents.php?' class='adminbtn1'>Update</a></td>";
-                        echo "<td><a href='registeredstudents.php?delete={$id}' class='adminbtn'>Delete</a></td>";
+                        echo "<td>{$admission_number}</td>";
+                        echo "<td>{$trainer_id}</td>";
+
                         echo "</tr>";
                     }
                     ?>
                     <!-- deleting records from the db -->
-                    <?php
-                    if (isset($_GET['delete'])) {
-                        $id = $_GET['delete'];
-                        $delete_id = mysqli_query($conn, "DELETE FROM `students` WHERE `id` = '$id'");
-                    }
-
-                    ?>
 
                 </tbody>
             </table>

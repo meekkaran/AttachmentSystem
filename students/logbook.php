@@ -1,4 +1,3 @@
-<?php include "./includes/db.php"; ?>
 <?php
 session_start();
 ob_start();
@@ -7,7 +6,20 @@ if (!isset($_SESSION['student_id'])) {
   $_SESSION['msg'] = "You must log in first";
   header('location: login.php');
 }
+// variable array $db that hold each parameters necessary to connect to the database
+$db['db_host'] = "localhost";
+$db['db_user'] = "root";
+$db['db_pass'] = "";
+$db['db_name'] = "supervisedb";
 
+// foreach loop that loops through array $db to convert parameters to constants
+foreach ($db as $key => $value) {
+  // define function that converts the paramerts looped to constants and uppercase
+  define(strtoupper($key), $value);
+}
+
+// connecting the database from the converted parameters into uppercase
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $query = "SELECT * FROM tbl_weeks";
 $select_all_weeks = mysqli_query($conn, $query);
 ?>
@@ -113,13 +125,9 @@ $select_all_weeks = mysqli_query($conn, $query);
           <th><b>FRIDAY</b></th>
           <th><b>SATURDAY</b></th>
           <th><b>Student Comments</b></th>
-          <!-- <th><b>Supervisor Comments</b></th>
-          <th><b>Trainer Comments</b></th> -->
-          <th><b>LECTURER REMARKS</b></th>
-          <th><b>TRAINER REMARKS</b></th>
         </tr>
-        <!-- <tbody id="show_data">
 
+        <tbody id="show_data">
           <?php
           if (isset($_SESSION['student_id'])) {
             $student_id = $_SESSION['student_id'];
@@ -135,7 +143,6 @@ $select_all_weeks = mysqli_query($conn, $query);
                 $classes[$row['day_title']] = $row;
               }
               foreach ($week_days as $day) {
-
                 if (array_key_exists($day, $classes)) {
                   $row = $classes[$day];
                   $_SESSION['student_id'] = $row['student_id'];
@@ -145,18 +152,14 @@ $select_all_weeks = mysqli_query($conn, $query);
                   // echo "<td style='background-color:green;color:white;'>"."Match"."</td>";
                   echo  "<td  style='background-color:green;color:white;'>" . $row['day_notes'] . "<br>" . $row['created_at'] . "</td>";
                 } else {
-
                   echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
                 }
               }
-              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
-              echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
               echo "</tr>";
             }
           }
           ?>
-
-        </tbody> -->
+        </tbody>
       </table>
     </div>
   </div>
@@ -166,15 +169,13 @@ $select_all_weeks = mysqli_query($conn, $query);
   // monday input
   if (isset($_POST['create_post'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['mon_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['mon_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -183,15 +184,13 @@ $select_all_weeks = mysqli_query($conn, $query);
   // tuesday input
   if (isset($_POST['create_post1'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['tue_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['tue_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -200,15 +199,13 @@ $select_all_weeks = mysqli_query($conn, $query);
   // wednesday input
   if (isset($_POST['create_post2'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['wed_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['wed_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, lec_id, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -217,15 +214,13 @@ $select_all_weeks = mysqli_query($conn, $query);
   // thursday input
   if (isset($_POST['create_post3'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['thur_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['thur_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -234,32 +229,28 @@ $select_all_weeks = mysqli_query($conn, $query);
   // friday input
   if (isset($_POST['create_post4'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['fri_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['fri_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
     // confirmQuery($create_post_query);
   }
-  // wednesday input
+  // saturday input
   if (isset($_POST['create_post5'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['sat_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['sat_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -268,15 +259,13 @@ $select_all_weeks = mysqli_query($conn, $query);
   // remarks input
   if (isset($_POST['create_post6'])) {
     global $conn;
-    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
-    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['remark'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['remarks_notes'];
     $student_id = $_SESSION['student_id'];
-    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id, leccomment, trainercomment) ";
+    $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}', NULL, NULL) ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -284,9 +273,109 @@ $select_all_weeks = mysqli_query($conn, $query);
   }
   ?>
 
+
   <!-- footer section -->
+  <!-- LECTURER AND TRAINER COMMENTS -->
+  <div class="comments">
+    <div class="lecturercomments">
+      <h1>LECTURER COMMENTS</h1>
+      <div class="logbookbody">
+        <div class="article">
 
 
+          <table class="table table-striped" width="100%" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
+            <tr>
+              <th><b>week/12</b></th>
+              <th><b>LECTURER REMARKS</b></th>
+            </tr>
+            <tbody id="show_data">
+              <?php
+              if (isset($_SESSION['student_id'])) {
+                $student_id = $_SESSION['student_id'];
+                foreach ($select_all_weeks as $key => $t) {
+                  echo "<tr>";
+                  echo "<td>" . $t['week_title'] . "</td>";
+                  $conn = mysqli_connect("localhost", "root", "", "supervisedb");
+                  $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "' ";
+                  $res = mysqli_query($conn, $query12);
+                  $week_days = array('LECREMARK');
+                  $classes = array();
+                  while ($row = mysqli_fetch_assoc($res)) {
+                    $classes[$row['day_title']] = $row;
+                  }
+                  foreach ($week_days as $day) {
+                    if (array_key_exists($day, $classes)) {
+                      $row = $classes[$day];
+                      $_SESSION['student_id'] = $row['student_id'];
+                      $_SESSION['week_id'] = $row['week_id'];
+                      $id = $_SESSION['student_id'];
+                      $id1 = $_SESSION['week_id'];
+                      // echo "<td style='background-color:green;color:white;'>"."Match"."</td>";
+                      echo  "<td  style='background-color:green;color:white;'>" . $row['day_notes'] . "<br>" . $row['created_at'] . "</td>";
+                    } else {
+                      echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+                    }
+                  }
+                  echo "</tr>";
+                }
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="trainercomments">
+      <h1>TRAINER COMMENTS</h1>
+      <div class="logbookbody">
+        <div class="article">
+
+          <table class="table table-striped" width="100%" id="mytable" border="2" style="background-color: #84ed86; color: #761a9b; margin: 0 auto;">
+            <tr>
+              <th><b>week/12</b></th>
+              <th><b>TRAINER REMARKS</b></th>
+            </tr>
+            <tbody id="show_data">
+              <?php
+              if (isset($_SESSION['student_id'])) {
+                $student_id = $_SESSION['student_id'];
+                foreach ($select_all_weeks as $key => $t) {
+                  echo "<tr>";
+                  echo "<td>" . $t['week_title'] . "</td>";
+                  $conn = mysqli_connect("localhost", "root", "", "supervisedb");
+                  $query12 = "SELECT * FROM logbookdata WHERE week_id='" . $t['week_id'] . "' AND student_id='" . $student_id . "' ";
+                  $res = mysqli_query($conn, $query12);
+                  $week_days = array('TRAINERREMARK');
+                  $classes = array();
+                  while ($row = mysqli_fetch_assoc($res)) {
+                    $classes[$row['day_title']] = $row;
+                  }
+                  foreach ($week_days as $day) {
+                    if (array_key_exists($day, $classes)) {
+                      $row = $classes[$day];
+                      $_SESSION['student_id'] = $row['student_id'];
+                      $_SESSION['week_id'] = $row['week_id'];
+                      $id = $_SESSION['student_id'];
+                      $id1 = $_SESSION['week_id'];
+                      // echo "<td style='background-color:green;color:white;'>"."Match"."</td>";
+                      echo  "<td  style='background-color:green;color:white;'>" . $row['day_notes'] . "<br>" . $row['created_at'] . "</td>";
+                    } else {
+                      echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
+                    }
+                  }
+                  echo "</tr>";
+                }
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
