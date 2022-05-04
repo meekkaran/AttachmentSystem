@@ -175,7 +175,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     $student_id = $_SESSION['student_id'];
     $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}'";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);

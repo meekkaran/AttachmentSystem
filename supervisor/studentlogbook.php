@@ -152,10 +152,11 @@ $select_all_weeks = mysqli_query($conn, $query);
                 $query12 = "SELECT * FROM lec_comments WHERE week_id='" . $t['week_id'] . "' AND lec_id='" . $lec_id . "'";
                 $res = mysqli_query($conn, $query12);
                 $week_days = array('LECREMARK');
-                while ($result = mysqli_fetch_array($res)) {
+                if ($result = mysqli_fetch_array($res)) {
                   echo  "<td  style='background-color:green;color:white;'>" . $result['lecomment'] . "</td>";
+                } else {
+                  echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
                 }
-                echo "<td style='background-color:red;color:white;'>" . "Pending" . "</td>";
               }
               echo "</tr>";
             }
@@ -170,13 +171,15 @@ $select_all_weeks = mysqli_query($conn, $query);
   //lecturer remarks input
   if (isset($_POST['create_post7'])) {
     global $conn;
-    $day_title = $_POST['lecremark'];
+    // $day_title = $_POST['lecremark'];
     $week_title = $_POST['week_id'];
     $day_notes = $_POST['lecomment'];
     $query = "INSERT INTO lec_comments(student_id, lec_id, week_id, lecomment) ";
     $query .=
       "VALUES('{$student_id}',{$_SESSION['lec_id']},$week_title,'$day_notes') ";
     $create_post_query = mysqli_query($conn, $query);
+    header('location: studentlogbook.php');
+    exit(0);
     // confirmQuery($create_post_query);
   }
   ?>
