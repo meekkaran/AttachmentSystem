@@ -26,8 +26,6 @@ foreach ($db as $key => $value) {
 
 // connecting the database from the converted parameters into uppercase
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,51 +64,47 @@ $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             </ul>
         </div>
     </header>
-
-    <div class="submitreportsection">
-        <div class="heading">
-            <h2>Submit Report</h2>
-        </div>
+    <form method="post" enctype="multipart/form-data">
         <div class="submitreportbody">
-            <form method="POST" enctype="multipart/form-data" id="form">
-                <h1 style="text-align: center">Upload Report</h1>
-                <input type="file" name="file[]" multiple required>
-                <input type="submit" value="Upload" id="sub-but">
-                <h4 style="text-align: center"><strong style="color: #E13F41">Please Ensure That your report is in a Microsoft Word format with your index number as its name before uploading it</strong></h4>
-                <h4 style="text-align: center">Any work not in Microsoft Word format would be discarded </h4>
-
-                <progress id="prog" max="100" value="0" style="display: none"></progress>
-                <div id="amount_reached"></div>
-            </form>
+            <h1 style="text-align: center">Upload Report</h1>
+            <label>Title</label>
+            <input type="text" name="title">
+            <label>File Upload</label>
+            <input type="File" name="file">
+            <input type="submit" name="submit">
+            <h4 style="text-align: center"><strong style="color: #E13F41">Please Ensure That your report is in a Microsoft Word format with your index number as its name before uploading it</strong></h4>
+            <h4 style="text-align: center">Any work not in Microsoft Word format would be discarded </h4>
         </div>
-    </div>
+    </form>
 
-    <script>
-        $(document).ready(function() {
-            $(document).ready(function() {
-                $("#form").on('submit', function(e) {
-                    e.preventDefault();
-                    $(this).ajaxSubmit({
-                        url: 'upload.php',
-                        beforeSend: function() {
-                            $("#prog").show();
-                            $("#prog").attr('value', '0');
-                        },
-                        uploadProgress: function(event, position, total, percentComplete) {
-                            $("#prog").attr('value', percentComplete);
-                            $('#sub-but').val(percentComplete + '%');
-                        },
-                        success: function() {
-                            $('#sub-but').val('Files Uploaded!!');
-                            setTimeout(function() {
-                                $('#sub-but').val('Upload');
-                            }, 1000);
-                        },
-                    });
-                });
-            });
-        });
-    </script>
+    <?php
+    if (isset($_POST["submit"])) {
+        #retrieve file title
+        $title = $_POST["title"];
+
+        #file name with a random number so that similar dont get replaced
+        $pname = rand(1000, 10000) . "-" . $_FILES["file"]["name"];
+
+        #temporary file name to store file
+        $tname = $_FILES["files"]["tmp_name"];
+
+        #upload directory path
+        $uploads_dir = "/images";
+
+        #to move uploaded file to specific location
+        move_uploaded_file($tname, $uploads_dir . '/' . $pname);
+
+        $student_id = $_SESSION['student_id'];
+        #sql query to insert into database
+        $sql = "INSERT into fileup(title,report,student_id,posted_at) VALUES('$title','$pname', '$student_id',now())";
+
+        if (mysqli_query($conn, $sql)) {
+            echo "File Successfully Uploaded";
+        } else {
+            echo "Error when uploading report";
+        }
+    }
+    ?>
 
     <!-- footer section -->
 

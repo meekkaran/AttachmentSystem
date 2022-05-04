@@ -28,7 +28,7 @@ if (!isset($_SESSION['trainer_id'])) {
         <nav class="navbar">
             <ul>
                 <li><a href="assignedtrainer.php">Add Student</a></li>
-                <li><a href="">Students Logbooks</a></li>
+                <li><a href="assignedtrainer.php">Students Logbooks</a></li>
                 <li><a href="#">Logout</a></li>
                 <li><a href="#">My Dashboard +</a>
                     <ul>

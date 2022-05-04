@@ -3,7 +3,7 @@
 session_start();
 ob_start();
 
-if (!isset($_SESSION['lec_id'])) {
+if (!isset($_SESSION['trainer_id'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: login.php');
 }
@@ -32,10 +32,10 @@ $select_all_weeks = mysqli_query($conn, $query);
 
         <nav class="navbar">
             <ul>
-                <li><a href="assigned.php">Students Logbooks</a></li>
+                <li><a href="assignedtrainer.php">Students Logbooks</a></li>
                 <li><a href="#">Logout</a></li>
                 <li class="username"><span style="color:rgb(255, 198, 0);font-size:1.1em"><em>Welcome,</em>&nbsp; </span><span style="font-family:serif">
-                        <?php echo $_SESSION['lecname']; ?></span>
+                        <?php echo $_SESSION['trainername']; ?></span>
                 </li>
             </ul>
         </nav>
@@ -112,7 +112,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     <!-- footer section -->
     <!-- LECTURER COMMENTS -->
     <div class="lecomments">
-        <h1>LECTURER COMMENTS</h1>
+        <h1 style="color:#fff">LECTURER COMMENTS</h1>
         <div class="logbookbody">
             <form method="post" action="studentlogbook.php">
                 <div class="nav">
@@ -128,7 +128,7 @@ $select_all_weeks = mysqli_query($conn, $query);
                     <div class="aside">
                         <hr>
                         <input type="text" id="lecremark" name="lecremark" class="lecremark" value="LECREMARK" placeholder="LECTURER REMARK" readonly />
-                        <textarea type="text" id="lrmk" name="lecomment" class="form-control lrmk" placeholder="LECTURER WEEKLY REMARK"></textarea>
+                        <!-- <textarea type="text" id="lrmk" name="lecomment" class="form-control lrmk" placeholder="LECTURER WEEKLY REMARK"></textarea> -->
                         <input name="create_post7" type="submit" id="btn_save8" value="SUBMIT LECTURER REMARK" class="btn  sv9">
                         <hr>
                     </div>
@@ -169,7 +169,7 @@ $select_all_weeks = mysqli_query($conn, $query);
 
     <!-- TRAINER COMMENTS -->
     <div class="trainercomments">
-        <h1>TRAINER COMMENTS</h1>
+        <h1 style="color:#fff">TRAINER COMMENTS</h1>
         <div class="logbookbody">
             <form method="post" action="trainerstudentlogbook.php">
                 <div class="nav">
@@ -223,9 +223,6 @@ $select_all_weeks = mysqli_query($conn, $query);
             </div>
         </div>
     </div>
-
-
-
 
     <?php
 

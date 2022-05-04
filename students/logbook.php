@@ -126,7 +126,6 @@ $select_all_weeks = mysqli_query($conn, $query);
           <th><b>SATURDAY</b></th>
           <th><b>Student Comments</b></th>
         </tr>
-
         <tbody id="show_data">
           <?php
           if (isset($_SESSION['student_id'])) {
@@ -169,13 +168,15 @@ $select_all_weeks = mysqli_query($conn, $query);
   // monday input
   if (isset($_POST['create_post'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['mon_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['mon_notes'];
     $student_id = $_SESSION['student_id'];
     $query = "INSERT INTO logbookdata(week_id, day_title, day_notes, created_at, student_id) ";
     $query .=
-      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}'";
+      "VALUES({$week_title},'{$day_title}','{$day_notes}',now(), '{$student_id}') ";
     $create_post_query = mysqli_query($conn, $query);
     header('location: logbook.php');
     exit(0);
@@ -184,6 +185,8 @@ $select_all_weeks = mysqli_query($conn, $query);
   // tuesday input
   if (isset($_POST['create_post1'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['tue_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['tue_notes'];
@@ -199,6 +202,8 @@ $select_all_weeks = mysqli_query($conn, $query);
   // wednesday input
   if (isset($_POST['create_post2'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['wed_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['wed_notes'];
@@ -214,6 +219,8 @@ $select_all_weeks = mysqli_query($conn, $query);
   // thursday input
   if (isset($_POST['create_post3'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['thur_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['thur_notes'];
@@ -229,6 +236,8 @@ $select_all_weeks = mysqli_query($conn, $query);
   // friday input
   if (isset($_POST['create_post4'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['fri_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['fri_notes'];
@@ -241,9 +250,11 @@ $select_all_weeks = mysqli_query($conn, $query);
     exit(0);
     // confirmQuery($create_post_query);
   }
-  // saturday input
+  // wednesday input
   if (isset($_POST['create_post5'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['sat_day'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['sat_notes'];
@@ -259,6 +270,8 @@ $select_all_weeks = mysqli_query($conn, $query);
   // remarks input
   if (isset($_POST['create_post6'])) {
     global $conn;
+    // $day_title = isset($_GET['mon_days']) ? $_GET['mon_days'] : '';
+    // $day_title = isset($_POST['mon_days']) ? $_POST['mon_days'] : '';
     $day_title = $_POST['remark'];
     $week_title = $_POST['week_id'];
     $day_notes  = $_POST['remarks_notes'];
@@ -273,9 +286,9 @@ $select_all_weeks = mysqli_query($conn, $query);
   }
   ?>
 
-
   <!-- footer section -->
-  <!-- LECTURER AND TRAINER COMMENTS -->
+
+
   <div class="comments">
     <div class="lecomments">
       <h1>LECTURER COMMENTS</h1>
@@ -317,7 +330,7 @@ $select_all_weeks = mysqli_query($conn, $query);
                   $conn = mysqli_connect("localhost", "root", "", "supervisedb");
                   $query12 = "SELECT * FROM lec_comments WHERE week_id='" . $t['week_id'] . "' AND lec_id='" . $lec_id . "'";
                   $res = mysqli_query($conn, $query12);
-                  $week_days = array('LECREMARK');
+                  // $week_days = array('LECREMARK');
                   if ($result = mysqli_fetch_array($res)) {
                     echo  "<td  style='background-color:green;color:white;'>" . $result['lecomment'] . "</td>";
                   } else {
@@ -374,7 +387,7 @@ $select_all_weeks = mysqli_query($conn, $query);
                   $conn = mysqli_connect("localhost", "root", "", "supervisedb");
                   $query12 = "SELECT * FROM trainer_comments WHERE week_id='" . $t['week_id'] . "' AND trainer_id='" . $trainer_id . "'";
                   $res = mysqli_query($conn, $query12);
-                  $week_days = array('TRAINERREMARK');
+                  // $week_days = array('TRAINERREMARK');
                   if ($result = mysqli_fetch_array($res)) {
                     echo  "<td  style='background-color:green;color:white;'>" . $result['trainercomment'] . "</td>";
                   } else {
@@ -391,6 +404,7 @@ $select_all_weeks = mysqli_query($conn, $query);
     </div>
 
   </div>
+
 </body>
 
 </html>
